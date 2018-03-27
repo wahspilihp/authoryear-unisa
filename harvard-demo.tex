@@ -35,7 +35,7 @@
 %\ihead{\headmark}
 %\ehead{\headmark}
 \cfoot*{\pagemark}
-\ofoot*{Philip Shaw\\12345678}
+\ofoot*{Philip Shaw}
 
 
 \usepackage{amsthm}
@@ -52,24 +52,6 @@
 %\providecommand{\frontmatter}{\pagenumbering{roman}\setcounter{page}{1}}
 %\providecommand{\mainmatter}{\pagenumbering{arabic}\setcounter{page}{1}}
 
-
-\newtoggle{unisasep}
-\togglefalse{unisasep}
-\iftoggle{unisasep}{%
-	\usepackage{fontspec}%
-	\setmainfont{Times New Roman}
-	\setsansfont{Arial}
-	\setkomafont{descriptionlabel}{\normalfont\bfseries}%
-	\setkomafont{chapter}{\sffamily\bfseries\changefontsizes{14}\baselineskip=10pt\parskip=7pt}%
-	\setkomafont{section}{\sffamily\bfseries\changefontsizes{12}\baselineskip=8pt\parskip=1pt}%
-	\setkomafont{subsection}{\sffamily\changefontsizes{12}}%
-	\setkomafont{subsubsection}{\usekomafont{subsection}}%
-	\setkomafont{paragraph}{\usekomafont{subsection}}%
-	\setkomafont{subparagraph}{\usekomafont{subsection}}%
-}{%
-	%\komafont{chapter}{\sffamily\bfseries}%
-}
-
 \usepackage{stringstrings}
 
 \begin{document}
@@ -79,36 +61,8 @@
 \title{The authoryear-unisa \biblatex{} Style}
 \subtitle{Demonstration and Test Cases}
 \author{Philip Shaw}
-%\date{}
-% \makeatletter
-%    \begin{tabular}[t]{c}
-%               \@author
-%             \end{tabular}\par
-% \makeatother
 
-%\iftoggle{unisasep}{
-% \publishers{University of South Australia\\\ \\\ \\
-% Division of Information Technology, Engineering and the Environment}
-% \begin{titlepage}
-% \makeatletter
-% \begin{center}
-% 	\ \par\ \par\ \par\ \par\ \par
-% 	%\vskip{3cm}
-% 	{\changefontsizes{16}\bfseries\rmfamily
-% 	\@publishers
-% 	\par\ \par\ \par
-% 	}
-% 	{\textbf\rmfamily\changefontsizes{20}\bfseries\rmfamily \@subject\par\ \par\ \par\ \par	\@title\par\changefontsizes{18}\@subtitle}
-% 	\ \par\ \par\ \par\ \par
-% 	{\changefontsizes{14}{\bfseries Name: }Author\par\ \par\ \par\ \par	Date 
-% 	}
-% \end{center}
-% \makeatother
-% \end{titlepage}
-% \KOMAoptions{parskip=full*}
-% }{
 	\maketitle
-% }
 \frontmatter
 \chapter*{Abstract}
 This bibliography style has been developed solely to meet the demands of the UniSA-Harvard referencing system as laid out in the January 2017 edition of the \emph{Harvard Referencing Guide UniSA}. It is not intended to be configurable, and as \LaTeX code it is pretty hacky, but aside from the caveats noted in marginal comments it meets the requirements for those formats which are implemented.
