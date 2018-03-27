@@ -7,7 +7,7 @@ The BBX file meets many of the examples, complete with corrections which I assum
 There are some aspects of the specification which are ambiguous or unclear. These are, so far:
 * exactly what the rules are for using short and long names in the biblography. THe guide uses short names in publishers and so on, but does not introduce them with the long name and brackets when they appear as an author. I have treated their appearance as a publisher as though it were a repeatedly-cited author, but I am not sure I've judged the rules correctly.
 * the year is missing in their example of a TV news item. I assume that's erroneous.
-* I am not sure how to reference a whole issue of a periodical, or @stdmodel
+* I am not sure how to reference a whole issue of a periodical, or @set
 
 ## Known Limitations
 * Translated classics are not correctly shown without dates
