@@ -1,0 +1,566 @@
+\documentclass[a4paper,australian,oneside,12pt,footlines=3]{scrbook}%pagenumber=bottomcenter,
+\usepackage{babel}
+\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear-unisa,terseinits=true]{biblatex}
+%\usepackage[citestyle=authoryear-unisa,bibstyle=debug,terseinits=true]{biblatex}
+%\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear,terseinits=true,giveninits=true]{biblatex
+\addbibresource{bibliography.bib}
+%\addbibresource{biblatex-examples.bib}
+%\renewrobustcmd*{\bibinitperiod}{Hello}
+\renewrobustcmd*{\bibinitdelim}{}
+\renewrobustcmd*{\bibsetup}{\singlespacing}
+
+\newcommand{\todo}[1]{\marginpar{\singlespacing\textbf{TO DO:} {#1}}}
+\newcommand{\biblatex}{\texttt{biblatex}}
+\newcommand{\example}[1]{\textsf{#1}}
+\newcommand{\instruction}[1]{\textbf{#1}}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{etoolbox}
+\usepackage{booktabs}
+\usepackage{mwe}
+
+\usepackage{setspace}
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage[autooneside=false]{scrlayer-scrpage}
+\automark[chapter]{chapter}
+\automark*[section]{}
+%\ohead{\headmark}
+%\chead{\headmark}
+%\ihead{\headmark}
+%\ehead{\headmark}
+\cfoot*{\pagemark}
+\ofoot*{Philip Shaw\\12345678}
+
+
+\usepackage{amsthm}
+\theoremstyle{remark}
+\newtheorem*{note}{Note}
+
+\usepackage[thresholdtype=words]{csquotes}
+% Move the final punctuation for blockquotes to the end, as per UniSA style guide
+\renewcommand{\mkcitation}[1]{ #1}
+\renewcommand{\mktextquote}[6]{#1#2#3#6#4#5}
+\SetBlockThreshold{30}
+%\SetCiteCommand{\parencite}
+
+%\providecommand{\frontmatter}{\pagenumbering{roman}\setcounter{page}{1}}
+%\providecommand{\mainmatter}{\pagenumbering{arabic}\setcounter{page}{1}}
+
+
+\newtoggle{unisasep}
+\togglefalse{unisasep}
+\iftoggle{unisasep}{%
+	\usepackage{fontspec}%
+	\setmainfont{Times New Roman}
+	\setsansfont{Arial}
+	\setkomafont{descriptionlabel}{\normalfont\bfseries}%
+	\setkomafont{chapter}{\sffamily\bfseries\changefontsizes{14}\baselineskip=10pt\parskip=7pt}%
+	\setkomafont{section}{\sffamily\bfseries\changefontsizes{12}\baselineskip=8pt\parskip=1pt}%
+	\setkomafont{subsection}{\sffamily\changefontsizes{12}}%
+	\setkomafont{subsubsection}{\usekomafont{subsection}}%
+	\setkomafont{paragraph}{\usekomafont{subsection}}%
+	\setkomafont{subparagraph}{\usekomafont{subsection}}%
+}{%
+	%\komafont{chapter}{\sffamily\bfseries}%
+}
+
+\usepackage{stringstrings}
+
+\begin{document}
+%\publishers{University of South Australia\\
+%Division of Information Technology, Engineering and the Environment}
+\subject{ENGG 1003 Sustainable Engineering Practice}
+\title{The authoryear-unisa \biblatex{} Style}
+\subtitle{Demonstration and Test Cases}
+\author{Philip Shaw}
+%\date{}
+% \makeatletter
+%    \begin{tabular}[t]{c}
+%               \@author
+%             \end{tabular}\par
+% \makeatother
+
+%\iftoggle{unisasep}{
+% \publishers{University of South Australia\\\ \\\ \\
+% Division of Information Technology, Engineering and the Environment}
+% \begin{titlepage}
+% \makeatletter
+% \begin{center}
+% 	\ \par\ \par\ \par\ \par\ \par
+% 	%\vskip{3cm}
+% 	{\changefontsizes{16}\bfseries\rmfamily
+% 	\@publishers
+% 	\par\ \par\ \par
+% 	}
+% 	{\textbf\rmfamily\changefontsizes{20}\bfseries\rmfamily \@subject\par\ \par\ \par\ \par	\@title\par\changefontsizes{18}\@subtitle}
+% 	\ \par\ \par\ \par\ \par
+% 	{\changefontsizes{14}{\bfseries Name: }Author\par\ \par\ \par\ \par	Date 
+% 	}
+% \end{center}
+% \makeatother
+% \end{titlepage}
+% \KOMAoptions{parskip=full*}
+% }{
+	\maketitle
+% }
+\frontmatter
+\chapter*{Abstract}
+This bibliography style has been developed solely to meet the demands of the UniSA-Harvard referencing system as laid out in the January 2017 edition of the \emph{Harvard Referencing Guide UniSA}. It is not intended to be configurable, and as \LaTeX code it is pretty hacky, but aside from the caveats noted in marginal comments it meets the requirements for those formats which are implemented.
+\todo{Support automatic citation of page numbers where only one page is in the source.}
+
+This document is both an example of the use of the reference style (allowing comparison to the official specification), and a set of test cases for semi-manual regression testing.
+
+It requires e-\TeX.
+
+\chapter*{Disclaimer}
+The \biblatex{} code is principally my own work, although it draws from the examples given in the \biblatex{} documentation and elsewhere. The sample text is drawn almost verbatim from \citetitle{UniSA-HRG}.
+
+\tableofcontents
+
+\mainmatter
+%--------------------------------------------------------------------------
+%
+%
+\chapter{An extract from an essay using the Harvard referencing system}
+\begin{refsection}
+\textelp{} The literal adaptation of a book to film is practically impossible. As \textcite[4]{Stam2005} suggests:
+\blockquote{The shift from a single-track verbal medium such as the novel to a multi-track medium like film, which can play not only with words (written and spoken) but also with music, sound effects, and moving photographic images, explains the unlikelihood and \textelp{} undesirability of literal fidelity.}
+It is puzzling, then, that readers and audiences are so critical of adaptations which take liberties, sometimes for the better, with their source material.
+
+Film adaptations of novels are frequently 
+\blockquote[{\parencite[15]{Stam2005a}}]{castigated and held to an absurdly rigorous standard of fidelity}. 
+If key scenes from a novel are pruned for film, audiences often react negatively. However, fidelity is not an appropriate measure for evaluating a film adaptation’s success, as numerous scholars concur \parencite{Desmond2006,Leitch2008,McFarlane1996,Miller2004}. Judging film adaptations is ultimately, \textcite[9]{Whelehan1999} contends, ‘an inexact science dogged by value judgments about the relative artistic worth of literature and film’. A fan of a novel might denigrate a film adaptation which alters the original book in some fashion, but their response is highly subjective and fails to take into account the practices and realities of film production \parencite[26]{McFarlane2007}.
+
+Sometimes there are grounds for hostility. Author Alan Moore has witnessed a number of his complex graphic novels adapted into shallow Hollywood products, making him extremely critical of filmmakers and the filmmaking process \parencite{Ahsurst2009}. However, this kind of attitude can be knee-jerk and reactionary. Rather than being overly pedantic about textual faithfulness, it is best to approach film adaptations as re-interpretations of their source material \parencite[8]{Hutcheon2006} or as 
+\textquote[(\citeauthor{Kristeva1995} cited in \cite{Sanders2006})]{a permutation of text, an intertextuality}. % needs to make pag enumber work eg (Kristeva, cited in Sanders 2006, p. 2)
+Moreover, new modes of production further complicate existing definitions of, and approaches to, adaptation \parencite[180]{Moore2010}. So\textelp{}
+
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+%---------------------------------------------------------------------------
+
+
+\chapter{Print}
+\section{Book}
+\begin{refsection}
+\textcite[108]{Chabon2008} discusses\textelp{}\\
+\textelp{} was discussed in the study\parencite[108]{Chabon2008}.\\
+\textelp{} a better world\parencite[5]{DGCS2008}
+
+\paragraph{Book with 2 or 3 authors}
+\textcite[46]{Campbell2010} argue\textelp{}\\
+\textelp{} alternatives are preferable\parencite[46]{Campbell2010}
+
+\paragraph{Book with 4 or more authors}
+As  suggested by \textcite[14]{Henkin2006}\textelp{}\\
+\textelp{}has been suggested \parencite[14]{Henkin2006}.
+
+\paragraph{Book with no date or an approximate date}
+This is emphasized by \textcite{Seah} when\textelp{}\\
+This is emphasised by \textcite{Seahcirca2005} when\textelp{}
+
+\paragraph{2nd, revised or later edition of a book}
+\textcite{Bordwell2009} explain\textelp{}\\
+\textelp{} influenced his work \parencite{Pearce2015}.
+
+\paragraph{Translated book}
+\textcite{Kristeva1995} has achieved great currency since its translation.\\
+\textelp{}is argued as the reason for this tension \parencite{Kristeva1995}.
+
+\paragraph{Translated Classic}
+\todo{this doesn't work, includes translation year as book year}
+\citeauthor{Plato1967} expressed this \parencite[56-60]{Plato1967} 
+\section{Edited Book}
+\todo{neither textcite nor parencite produce the ed. note}
+\todo{Support compiler instead of editor teg}
+\paragraph{Edited (ed.) or compiled (comp.) book}
+\textcite{Hornberger2003} questions whether\textelp{}\\
+It is not clear whether this point supports his previous assertions \parencite{Hornberger2003}
+
+\paragraph{Edited (ed.) or compiled (comp.) book with 2 or 3 editors}
+\textcite{Kronenberg2011} are interested in providing a framework for\textelp{}\\
+\textelp{}is included in this framework \parencite{Kronenberg2011}.
+
+\paragraph{Edited book with 4 or more editors}
+In their collection of essays, \textcite{Barnett2006} explore\textelp{}\\
+\textelp{}is explored throughout\parencite{Barnett2006}.
+
+
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\section{Chapter in an edited book}
+\begin{refsection}
+\nocite{Burt2010}
+\textcite[32]{Abbott2010} believes the horror blockbuster\textelp{}\\
+\textelp{}influential theory\parencite[11]{Naremore2004}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+\section{Journal Article}
+\begin{refsection}
+\paragraph{Journal article}
+\textcite[1548]{OHara2009} supports\textelp{}\\
+\textcite[296]{Wolff2010} note\textelp{}\\
+\textelp{}marked trends\parencite[296]{Wolff2010}
+
+\paragraph{Journal article---in press}
+\todo{include pubstate in citation}
+\example{Smith (in press) suggests \textelp{}.\\}
+\textcite{Smithinpress} suggests\textelp{}.
+
+\paragraph{Journal article from supplement issue}
+\todo{Supplement issue}
+\textcite[53]{Smith2007} explains that\textelp{}
+
+
+\paragraph{Special issue with editor}
+\textcite{Tudini2004} \textelp{}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Magazine article}
+\paragraph{Magazine article}
+\textcite[25]{Giedroyc2010} compare\textelp{}\\
+\textelp{}equivalent musicians \parencite[25]{Giedroyc2010}.\\
+\textelp{}living legend \parencite[82]{McEachen2011}.\\
+\textcite{Wolff2012}\textelp{}
+
+\paragraph{Magazine article with no author}
+\textcite[86]{LIBOR2012} highlights\textelp{}
+\todo{citation commands for article with no author}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Newspaper article}
+\paragraph{Newspaper Article}
+\textcite{Westwood2014} states\textelp{}\\
+\textelp{}in contemporary literature \parencite{Westwood2014}.
+
+\paragraph{Newspaper article with no author}
+The \textcite{AFR2012} examines\textelp{}\\
+\textelp{}big change \parencite{AFR2012}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Government Publication}
+\paragraph{Australian Bureau of Statistics (ABS) publication}
+\todo{Not implemented}
+\example{According to the Australian Bureau of Statistics (ABS) (2010), the national\textelp{}\\\textelp{}concerning figures (ABS 2010).\\Australian Bureau of Statistics (ABS) 2010, Measures of Australia’s progress 2010, cat. no. 1370.0, ABS, Canberra.}
+
+\paragraph{Government report}
+\instruction{If you cite the authoring body frequently in-text, introduce the organisation name in abbreviated form in brackets after the first citation. Use this abbreviation for subsequent citations, e.g. (HREOC 2012).}
+Also use this abbreviation when the name appears elsewhere.
+
+\textelp{}valuable future strategies \parencite[39]{Bradley2008}\\
+\textcite[18]{HREOC1997} recommended\textelp{}\nocite{HREOC1998}
+\example{The Human Rights and Equal Opportunity Commission (HREOC) (1997, p. 18) recommended\textelp{}\\Human Rights and Equal Opportunity Commission (HREOC) 1997,
+Bringing them home: report of the national inquiry into the separation of Aboriginal and Torres Strait Islander children from their families, HREOC, Canberra.}
+\todo{support short names properly}
+
+\paragraph{Hansard}
+\instruction{Use the same formatting for other parliamentary business at Commonwealth and State levels.}
+\example{\textelp{}was questioned (Australia, House of Representatives 2016, p. 3865).\\Australia, House of Representatives 2016, Debates, 19 April, pp. 3833 - 3900.}\\
+\example{\textelp{}was questioned (South Australia, Legislative Council 2016, p. 4482).\\South Australia, Legislative Council, 2016, Debates, 6 July, pp. 4467 – 4527.}
+\printbibliography[heading=subbibliography]
+
+
+\subsection{Legal publication}
+\todo{not implemented, use AGlC instead}
+\end{refsection}
+
+\begin{refsection}
+\section{Patent or standard}
+\paragraph{Patent}
+\textcite{Gordon2012} took out a patent on\textelp{}\\
+\textelp{}design was patented \parencite{Gordon2012}
+
+\paragraph{Standard}
+\example{Standards Association of Australia (1996) provides\textelp{}\\\textelp{}covering colours (Standards Association of Australia 1996).\\Standards Association of Australia 1996, Colour standards for general purposes: chocolate, AS 2700S-1996 (X64), Standards Australia, North Sydney.}\todo{not implemented}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Dictionary, encyclopaedia or handbook (reference works)}
+\paragraph{Dictionary or encyclopaedia without author(s) or editor(s)}
+\textcite[233]{HutchinsonEncylopaedia} defines\textelp{}\\
+According to the \textcite[152]{LongmanDict}\textelp{}
+
+\paragraph{Dictionary or encyclopaedia with author(s) or editor(s)}
+\textcite[66]{Blackburn2005} describes\textelp{}\\
+
+\paragraph{Handbook}
+\textcite{Denzin2011} advises\textelp{}\\
+\textelp{}is advised \parencite{Denzin2011}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Conference paper or thesis}
+\paragraph{Conference paper (in published proceedings)}
+\textcite[143]{Johnson2009} identifies\textelp{}\\
+\textelp{}praised his confidence \parencite[143]{Johnson2009}.
+
+\paragraph{Thesis}
+\textcite[8]{Savvas2009} offers\textelp{}\\
+..asset of virility \parencite[8]{Savvas2009}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Print miscellaneous}
+\todo{Not implemented}
+\paragraph{Print miscellaneous}\instruction{As details will vary when it comes to brochures and pamphlets, try and extract as much information as you can re: authorship, publication details etc.}\\
+\example{Beyondblue (2010) suggests\textelp{}\\Beyondblue 2010, Sleeping well, Beyondblue, Hawthorn West, Victoria.}\\
+\example{\textelp{}exercise caution (State Crime Prevention Branch 2009).\\State Crime Prevention Branch 2009, Personal safety, South Australia Police, Government of South Australia, Adelaide.}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\chapter{Online (electronic)}
+
+\begin{refsection}
+\section{Webpage or website}
+\paragraph{Whole website}
+The \textcite{DIC2012} takes\textelp{}\\
+\textelp{} main role \parencite{DIC2012}.
+
+\paragraph{Single page on a website}
+\textelp{}viable options \parencite{DoctorImmigration2012}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Online document}
+\paragraph{Online documents in PDF, Word or Excel form}
+\textelp{}related to the university’s future \parencite{UniSAHorizon2020}.\\
+\textelp{} climate \parencite[8]{BoM2016}.\\
+\textelp{}striving for innovation \parencite[12]{ArtGallerySA}.
+
+\paragraph{Hansard (online)}
+\todo{Not implemented}
+\instruction{Use the same formatting for other parliamentary business at Commonwealth and State levels.}%\\
+%\example{\textelp{}was questioned on this matter (Australia, House of Representatives 2016, p. 3865).\\Australia, House of Representatives 2016, Debates, 19 April, viewed 6 December 2016, <\url{http://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;db= CHAMBER;id=chamber%2Fhansardr%2F72a020b3-432a-4737-af9b- 1927e6fcaa6e%2F0099;query=Id%3A%22chamber%2Fhansardr%2F7 2a020b3-432a-4737-af9b-1927e6fcaa6e%2F0000%22}>.}\\
+%\example{\textelp{}was questioned on the Northern Economic Plan (South Australia, Legislative Council 2016, p. 4482).\\South Australia, Legislative Council 2016, Debates, 6 July, viewed 6 December 2016, <\url{http://hansardpublic.parliament.sa.gov.au/Pages/HansardResult.as px#/docid/HANSARD-10-18673}>.}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{E-book}
+\paragraph{E-book accessed via UniSA Library}
+\textelp{}forms of digitalese \parencite[20]{Tagg2015}.\\
+\textelp{}suburbanisation \parencite{Buxton2016}.\\
+\textelp{}explored in a recent collection \parencite{Waters2015}.\\
+\textelp{}technique is also recommended by \textcite{Flann2014}.
+
+\paragraph{E-book accessed via the internet and freely available online}
+\textcite{Frost2016} asserts that the significance of this project\textelp{}
+
+\paragraph{E-book purchased online e.g. from Amazon, iBooks, or publishers’ websites}
+\textelp{}informed the design of the questionnaire \parencite{Alston2012}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Online journal article}
+\paragraph{Journal article accessed via a library database}
+\textcite{Boon2011} examines\textelp{}\\
+..potent subtext \parencite[181]{Boon2011}.
+
+\paragraph{PDF version of a print journal article accessed via the internet (e.g. Google, Google Scholar, Muse, JSTOR)}
+\textcite[311]{Werstine1999} laments\textelp{}\\
+\textelp{}inherently flawed \parencite[311]{Werstine1999}
+
+\paragraph{Journal article from an electronic journal’s own website}
+\textcite{Blamires2012} writes\textelp{}\\
+\textelp{}in nursing \parencite[57]{Murray2012}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Online dictionary, encyclopaedia or handbook (reference works)}
+\paragraph{Standard dictionary online}
+\textcite{EOLD2016} defines this as \textelp{}
+
+\paragraph{Specialist encyclopaedia online}
+According to \textcite{Smith2011} phenomenology is \textelp{}
+
+\paragraph{Handbook online (e.g. e-book)}
+\textelp{}technique is also recommended by \textcite{Flann2014}.
+\begin{note}
+This is the same entry as the previous one for this ebook.
+\end{note}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{UniSA online course materials}
+\paragraph{Learnonline site}
+\instruction{Cite the university as the author of the course Learnonline site. Provide the URL for the course learnonline site.}
+\textelp{} \parencite{MEDI1001}
+
+\paragraph{Lecture Recordings}
+\textcite{MEDI1001lr} argues\textelp{}
+
+\paragraph{Lecture PowerPoints}
+\textcite{MEDI1001ppt} claims\textelp{}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Online news item}
+\paragraph{Article on a news website}
+\textcite{Day2012} suggests\textelp{}
+
+\paragraph{Article on a magazine- style website}
+\textcite{Walsh2012} forecasts\textelp{}\\
+\textelp{}found it lacking \parencite{Williams2012}.
+
+\paragraph{Newspaper article retrieved from Trove}
+\textelp{} pre-test \parencite{CanTimes1964}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Streaming audio and video}
+I have used the @Audio, @Video, @Movie, and @Music, types (all aliased together) for recordings and streaming. Use the type field to indicate the format (that seemed the most appropriate and least likely to clash with any other sensible use, and was suggested by the \biblatex{} manual), although I may change to using something else instead if this proves problematic. Howpublished is used for the free-text platform information etc. I am considering using Eprint and friends to hold video IDs, but for now that's too much work for the number of platforms that would need supporting to be useful.
+
+\paragraph{Podcast}
+\textelp{}identified as his strongest works \parencite{Hitfix}.
+
+\paragraph{Streamed video (e.g. YouTube clip)}
+A short video by the \textcite{UOML2015} explains\textelp{}\\
+..is discouraged \parencite{UOML2015}.
+
+\paragraph{Streaming video accessed via UniSA Library}
+\begin{note}
+I am assuming that the missing year in the seven news example reference is erroneous.\todo{Confirm this.}
+\end{note}
+\textelp{}\blockquote[SevenNews]{apologised for his company’s role in the debacle}\\
+\begin{note}
+\textquote{(dir.)} is appened if and only if the last author has a given name. This is a dirty kludge, but I can't think of a better way to distinguish between corporate authors and directors.
+It would be more elegant to put directors in an editor list and set the editorXrole to a suitable value, but it appears to be convention to stick the director (rather than the writer, say) in the author list so that's what I've gone with.
+\end{note}
+\begin{note}
+I am assuming the use of month-day date format in the example is an error.
+\end{note}
+\textelp{}\textelp{}as featured on \textcite{Checkout}.\\
+\textcite{Django} depicts\textelp{}\\
+Frank Wills \parencite{Simmons2010} demonstrates this approach\textelp{}\\
+\textelp{}explore these changes \parencite{Visconti1963}.
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Online miscellaneous}
+\paragraph{Systematic review (e.g. Cochrane Library)}
+\todo{Not Implemented}
+\textcite{Millward2008} review\textelp{}\\
+\textelp{}was found in the review \parencite{Millward2008}.
+
+\paragraph{Electronic thesis (held in a university repository)}
+\textcite{Foley2011} argues\textelp{}\\
+\textelp{}of morbidity \parencite{Foley2011}.
+
+\paragraph{Conference paper (in online proceedings)}
+\textelp{}important claim \parencite{Johnson2009}.
+
+\paragraph{Email correspondence}
+\todo{not implemented}
+
+\paragraph{Social networking update (e.g. Twitter, Facebook)}
+In response to Eastwood’s jabs, \textcite{Tweet} tweeted\textelp{}\todo{not working}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\chapter{Sound and Visual}
+\begin{refsection}
+\section{Film or television}
+\paragraph{Film (cinema release)}
+\nocite{TheMaster}
+\textcite{DjangoMovie} depicts\textelp{}
+
+\paragraph{Film on DVD, Blu-Ray, videotape, iTunes etc.}
+\textcite{Hugo} presents Méliès' as\textelp{}
+
+\paragraph{Television program}
+An episode of \textcite{Dateline} examines\textelp{}
+
+\paragraph{Episode of a television program/series}
+\nocite{Coulter2010}
+\textcite{56up} chronicles\textelp{}
+
+\paragraph{Episode of a television program/series on DVD, Blu-Ray, videotape, iTunes etc.}
+In season two’s penultimate episode \textcite{GameOfThrones}, the\textelp{}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\section{Sound and visual miscellaneous}
+\paragraph{Music recording on CD, iTunes etc.}
+\textcite{Palmer2011} explores the theme of\textelp{}
+
+\paragraph{Radio program}
+\textelp{}key concerns \parencite{ImmigrantNation}.
+
+\paragraph{CD-ROM}
+\textelp{}valuable tool \parencite{OxfordLearnersDict}.
+
+\paragraph{Video game}
+\citetitle{HaloReach} \parencite{HaloReach}, a prequel to\textelp{}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\begin{refsection}
+\chapter{Other}
+\paragraph{Computer programs and software (including apps)}
+\textelp{} program was developed \parencite{matlab}.\\
+\textelp{} the ABC iview app \parencite{ABCiViewApp}.
+
+ 
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=.48\textwidth]{example-image}
+\end{center}
+\caption{Image/diagram/artwork from a print source, \citetitle{HussinImage} \parencite{HussinImage}.}
+\end{figure}
+\printbibliography[heading=subbibliography]
+\end{refsection}
+
+\chapter{Examples provided with TeXLive's Bib\TeX{}}
+\section{The main \biblatex{} example}
+%\begin{refsection}[/opt/local/share/texmf-texlive/doc/latex/biblatex/examples/biblatex-examples.bib]
+\begin{refsection}[biblatex-examples.bib]
+	\nocite{*}
+	\printbibliography[heading=subbibliography]
+\end{refsection}
+%\section{The \biblatex{} Frankenstein example}
+%\begin{refsection}[/opt/local/share/texmf-texlive/doc/latex/biblatex/examples/biblatex-examples.bib]
+% \begin{refsection}[frankenstein.bib]
+% 	There is an unmatched brace in the last line of the annotation in \texttt{beckett:dream} in my distribution, and \texttt{o'brien:beckettcountry:alt} can't have an apostrophe in the key for \biblatex. If you get a lot of warnings about undefined citations, try correcting these.
+% 	\nocite{*}
+% 	\printbibliography[heading=subbibliography]
+% \end{refsection}
+% \section{Works on typography and typesetting}
+% \begin{refsection}[typeset.bib]
+% 	\nocite{*}
+% 	%this uses a variety of old commands, some of which shouldn't be in a bibliography file.
+% 	\let\tt\ttfamily
+% 	\printbibliography[heading=subbibliography]
+% \end{refsection}
+% \section{The \TeX{}Book bibliography}
+% \begin{refsection}[texbook3.bib]
+% 	\nocite{*}
+% 	\printbibliography[heading=subbibliography]
+% \end{refsection}
+%\nocite{*}
+%\parencite{*}
+\printbibliography
+\end{document}

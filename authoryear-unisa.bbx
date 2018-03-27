@@ -1,0 +1,495 @@
+\ProvidesFile{authoryear-unisa.bbx}
+[\abx@bbxid]
+
+\newcommand{\cmda}[1]{\global\def\da{#1}}
+\newcommand{\cmdb}{\cmda{C}}
+
+\newbibmacro*{begentry}{}
+\newbibmacro*{finentry}{}
+\renewrobustcmd*{\bibinitperiod}{}
+\setlength{\bibhang}{0pt}
+\DefineBibliographyStrings{australian}{lines={lines},line={line},circa={c.}}
+\renewcommand{\newunitpunct}{, }
+
+%\def\bysame{\leavevmode\hbox to3em{\hrulefill}\thinspace} % from ams document classes
+\def\bysame{--- } % appears to match example better
+
+\ExecuteBibliographyOptions{%
+	date=long,%
+	urldate=long,%
+	dateabbrev=false,%
+	labeldateparts=true,%
+	maxbibnames=99,%
+	datecirca=true,%
+	sorting=nyt
+}
+\usepackage{xstring}
+%\usepackage{textcase}
+\usepackage[level]{fmtcount}
+\newcommand*{\IsInteger}[3]{%
+    \IfStrEq{#1}{ }{%
+        #3% is a blank string
+    }{%
+        \IfInteger{#1}{#2}{#3}%
+    }%
+}%
+
+\InitializeBibliographyStyle{%
+	
+	\providecommand{\lastseenauthor}{dummy initial value}
+	\urlstyle{same} % set URLS to use body font, as per examples, while keeping the rest of the \url features. Note that the <> around URLs will always match the URL font 
+}
+
+% \AtDataInput{%
+% 	\ifentrytype{image}{%
+% 		\iffieldundef{crossref}{\message{Warning: images should be cited by thier ccontianing document.}}{\nocite{\thefield{crossref}}}
+% 	}
+% }
+
+%\RequirePackage{csquotes}
+ 
+\newcommand{\StrSubSafe}[3]{{\let\tempStrSubSafe{#1}\StrSubstitute{#1}{#2}{#3}}}
+
+
+\DeclareNameFormat{hasher}{\mkshortlong[\]}
+
+\gdef\ayuprefix{ayusl}
+\newcommand{\ayumkshortlongc}[3][]{%
+	\edef\code{#3}
+	\typeout{ayumlshortlongc >>#1<< >>#2<< >>#3<<}
+	%\gdef\ayuprefix{ayusl}
+	%\ifcsvoid{\ayuprefix s#3}{\global\expandafter\let\csname\ayuprefix s#3\endcsname#1}{\relax}%
+	\ifcsvoid{\ayuprefix s#3}{\csxdef{\ayuprefix s#3}{#1}}{}%
+	%\expandafter\show\csname \ayuprefix s#3\endcsname
+	\csxdef{\ayuprefix l#3}{#2}%
+	%\expandafter\show\csname \ayuprefix l#3\endcsname
+	\csxdef{ayusl#3}{%
+		\ifcsvoid{ayusls\code}{%
+			%\csname \ayuprefix l#3\endcsname%
+			#2%
+		}{%
+			%\csname \ayuprefix l#3\endcsname %
+			#2 %
+			(\csname \ayuprefix s\code\endcsname)%
+			\csgdef{\ayuprefix \code}{\csname \ayuprefix s\code\endcsname}}%
+	}%
+	\typeout{in ayumkshortlongc}
+	\expandafter\show\csname \ayuprefix #3\endcsname
+}
+%\show\ayuprefix
+% \ifdefvoid{\mdfivesum}{\global\let\mdfivesum\pdfmdfivesum}
+\newcommand{\ayumkshortlong}[2][]{%
+	%\typeout{>>>\expandafter\empty#1<<< >>>\expandafter\empty#2<<<}
+	%\makeatletter
+	\edef\longname{#2}
+	%\show\longname
+	\ayumkshortlongc[#1]{\longname}{\mdfivesum{\longname}}%
+	\typeout{returned to ayumkshortlong}
+	\expandafter\show\csname ayusl\mdfivesum{\longname}\endcsname
+}
+\newcommand{\ayushortlong}[1]{%
+	\ifcsvoid{\ayuprefix\mdfivesum{#1}}{%
+		#1%
+		\message{no short name (\ayuprefix\mdfivesum{#1}) for #1}%
+	}{%
+		\csname \ayuprefix\mdfivesum{#1}\endcsname%
+		\message{found short name (ayusl\mdfivesum{#1}) for #1}%
+		\expandafter\show\csname ayusl\mdfivesum{#1}\endcsname
+	}%
+}
+
+\DeclareIndexNameFormat{surnamel}{\xappto{\ayusllname}{\namepartfamily}}
+\DeclareIndexNameFormat{surnames}{\xappto{\ayuslsname}{\namepartfamily}}
+
+\DeclareIndexNameFormat{match}{%
+	\undef\ayusllname
+	\undef\ayuslsname
+	\indexnames[surnamel][\value{listcount}-\value{listcount}]{author}%
+	\indexnames[surnames][\value{listcount}-\value{listcount}]{shortauthor}%
+	\ayumkshortlong[\ayuslsname]{\ayusllname}%
+}
+\AtDataInput{%
+	\ifnameundef{shortauthor}{%
+		\typeout{there's no shorter name to add}
+	}{%
+		\typeout{matching shortname: \printnames[match]{shortauthor}}
+		\indexnames[match]{shortauthor}
+	}
+	\message{processed item \thefield{citekey}}
+	\expandafter\show\csname sl\mdfivesum{Human Rights and Equal Opportunity Commission}\endcsname
+
+}
+% \def\woohoo{This worked}
+
+
+\newbibmacro{url-date}{\iffieldundef{url}{}{\printurldate\newunit\printfield{url}}}
+\newbibmacro{year-letter}{%
+	\ifnameundef{translator}{%
+		\usebibmacro{year-letter-core}%
+	}{%
+		\iffieldundef{origdate}{%
+			\usebibmacro{year-letter-core}%
+		}{%
+			\iffieldequalstr{origendyear}{}{%
+				\iffieldequalstr{origyear}{}{%
+					\relax%
+				}{%
+					\usebibmacro{year-letter-core}%
+				}
+			}{%
+				\usebibmacro{year-letter-core}%
+			}%
+		}%
+	}%
+}
+\newbibmacro{year-letter-core}{%
+	\iffieldundef{year}{%
+		\iffieldundef{pubstate}{n.d.}{\printfield{pubstate}}%
+	}{%
+		\datecircaprint\printfield{labelyear}%
+		\iffieldundef{extrayear}{}{%
+			\mknumalph{\thefield{extrayear}}%
+		}%
+	}%
+}
+
+\newbibmacro{ed-eds}{\ifthenelse{\value{editor}=1}{(ed.)}{(eds.)}}
+\newbibmacro{publication}{\newunit\printlist{publisher}\newunit\printlist{location}\newunit}
+
+
+\newbibmacro{author-or-dash}[1][last-init]{\iffieldequals{namehash}{\lastseenauthor}{\bysame}{\printnames[#1]{author}}\savefield{namehash}{\lastseenauthor}}
+
+\newbibmacro{editor-or-dash}[1][last-init]{\iffieldequals{editornamehash}{\lastseenauthor}{\bysame}{\printnames[#1]{editor}}\savefield{editornamehash}{\lastseenauthor}}
+
+\newbibmacro{author-or-editor-or-dash}[1][]{%
+	\ifnameundef{author}{%
+		\ifnameundef{editor}{%
+			#1%
+		}{%
+			\usebibmacro{editor-or-dash}\addspace %
+			\usebibmacro{ed-eds}%
+		}%
+	}{%
+		\usebibmacro{author-or-dash}%
+	}\addspace%
+}
+
+\DeclareFieldFormat{urldate}{viewed \printfield{urlday} \printfield[month]{urlmonth} \printfield{urlyear}}
+
+\DeclareFieldFormat{plain}{#1}
+\DeclareFieldFormat[book]{title}{\emph{#1}}
+\DeclareFieldFormat{booktitle}{\emph{#1}}
+\DeclareFieldFormat{journaltitle}{\emph{#1}}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}
+\DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}
+\DeclareFieldFormat{innertitle}{\enquote{#1}}
+% \DeclareNameFormat{last-init}{\usebibmacro{family-init}{\namepartfamily}
+%         {\namepartgiveni}
+%         {\namepartprefix}
+%         {\namepartsuffix}}
+\DeclareNameFormat{last-init}{%
+	\ifdefvoid{\namepartprefix}{}{\namepartprefix{}~}%
+	\ifdefvoid{\namepartgiven}{%
+		\ayushortlong{\namepartfamily}%
+	}{%
+		\namepartfamily, \namepartgiveni
+	}%
+	\ifthenelse{\value{listcount}<\numexpr\value{liststop}-1}{%
+		, %
+	}{%
+		\ifthenelse{\value{listcount}=\numexpr\value{liststop}-1}{%
+		~\& %
+		}{% last item
+			%suffix ges here
+		}%
+	}%
+}
+
+\DeclareNameFormat{last-init-dir}{%
+	\ifdefvoid{\namepartprefix}{}{\namepartprefix{}~}%
+	\ifdefvoid{\namepartgiven}{%
+		\ayushortlong{\namepartfamily}%
+	}{%
+		\namepartfamily, \namepartgiveni%
+	}%
+	\ifthenelse{\value{listcount}<\numexpr\value{liststop}-1}{%
+		, %
+	}{%
+		\ifthenelse{\value{listcount}=\numexpr\value{liststop}-1}{%
+		~\& %
+		}{% last item
+			\ifdefvoid{\namepartgiven}{}{ (dir.)}
+		}%
+	}%
+}
+\DeclareNameFormat{init-last}{\ifdefvoid{\namepartgiven}{}{\namepartgiveni}~\ifdefvoid{\namepartprefix}{}{\namepartprefix{}~}\namepartfamily\ifthenelse{\value{listcount}<\numexpr\value{liststop}-1}{, }{\ifthenelse{\value{listcount}=\numexpr\value{liststop}-1}{ \& }{}}}
+\DeclareNameAlias{author}{last-init}
+\DeclareNameAlias{journal}{journaltitle}
+%\DeclareNameAlias[book]{editor}{last-init}
+\DeclareNameAlias{editor}{init-last}
+
+\DeclareFieldFormat{edition}{%
+	\ifinteger{#1}{%
+		\ordinalnum{#1} edn%
+	}{%
+		%\StrSubSafe{%
+			\StrSubstitute{%
+				#1%\MakeTextLowercase{#1}%TODO, make downcasing work
+			}{edition}{edn}%
+		%}{revised}{rev.}% per example in guide
+	}%
+}
+\DeclareFieldFormat{volume}{\ifinteger{#1}{vol. #1}{#1}}
+\DeclareFieldFormat[article]{number}{\ifinteger{#1}{no. #1}{not integer #1}}
+\DeclareNameFormat{translator}{%
+	\ifthenelse{\value{listcount}=\value{liststart}}{trans.\addspace }{}%
+	\ifdefvoid{\namepartgiven}{Blank name}{\namepartgiveni}~\ifdefvoid{\namepartprefix}{}{\namepartprefix{}~}\namepartfamily\ifthenelse{\value{listcount}<\numexpr\value{liststop}-1}{, }{\ifthenelse{\value{listcount}=\numexpr\value{liststop}-1}{ \& }{}}}
+
+% \newbibmacro{eprint-info}[1][]{%
+% 	\iffieldundef{eprint}{\usebibmacro{eprint-info-header}}{#1\printfield{eprint}}%
+% }
+% \newbibmacro{eprint-info-header}[1][]{#1\printfield{eprinttype}\iffieldundef{eprintclass}{}{: \printfield{eprintclass}}}
+% \DeclareFieldFormat{eprint}{\usebibmacro{eprint-info-header}: #1}
+
+\DeclareFieldFormat{eprint:YouTube}{\printtext[url]{https://www.youtube.com/watch?v=#1}}
+
+\DeclareFieldFormat{pages}{\mkcomprange[\mkpageprefix]{#1}}
+
+%from biblatex.def
+\newbibmacro*{eprint}{%
+  \iffieldundef{eprinttype}
+    {\printfield{eprint}}
+    {\printfield[eprint:\strfield{eprinttype}]{eprint}}}
+
+\DeclareListFormat{shortlong}{\ayushortlong{#1}}
+\DeclareListAlias{organization}{shortlong}
+\DeclareListAlias{institution}{shortlong}
+
+%------------------------------------------------------------------------
+
+\DeclareBibliographyDriver{article}{%
+	\ifnameundef{author}{%
+		\printfield{journaltitle} %
+	}{%
+		%\printnames{author}%
+		\usebibmacro{author-or-dash} %
+	}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\ifnameundef{editor}{}{ in \printnames{editor} \usebibmacro{ed-eds}\newunit}%
+	\printfield[plain]{issue}\newunit%
+	\ifnameundef{author}{}{\printfield{journaltitle}, }% do this because we use the journal name as the author if the author is missing
+	\iffieldundef{series}{}{Series~\printfield{series}\newunit}%
+	\iffieldundef{volume}{%
+		\iffieldundef{number}{%
+			\iffieldundef{month}{}{%
+				\iffieldundef{day}{}{%
+					\printfield{day}%
+				} \printfield{month}%
+			}%
+		}{}%
+	}{%
+		%vol. \printfield{volume}%
+		\printfield{volume}\newunit%
+	}%
+	%\iffieldundef{number}{}{%
+		%\iffieldundef{volume}{}{, }
+		%no. \printfield{number}%
+		\printfield{number}\newunit
+	%}%
+	\usebibmacro{publication}\newunit%
+	\printfield{eid}\newunit%
+	\printfield{pages}\newunit%
+	\usebibmacro{url-date}\newunit%
+	\usebibmacro{eprint}\newunit%
+	\printfield{doi}.
+}
+
+\DeclareBibliographyDriver{book}{%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\printfield{edition}\newunit%
+	\printnames{translator}\newunit%
+	\usebibmacro{publication}\newunit%
+	\ifnameundef{translator}{}{\printdate{pubdate}}\newunit
+	\iffieldundef{url}{}{\usebibmacro{url-date}}\newunit%
+	\usebibmacro{eprint}.%\usebibmacro{eprint-info}.
+}
+
+\DeclareBibliographyDriver{inbook}{%
+	% \ifnameundef{author}{%
+	% 	\printnames[last-init]{editor} \usebibmacro{ed-eds}%
+	% }{%
+	% 	%\printnames{author}
+	% 	\usebibmacro{author-or-dash}%
+	% } %
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\addspace in\addspace%
+	\ifnameundef{bookauthor}{%
+		\ifnameundef{author}{%
+			%print nothing because we used editor in place of the missing author
+		}{%
+			\ifnameundef{editor}{}{\printnames{editor}\addspace\usebibmacro{ed-eds}}%
+		}%
+	}{
+		\printnames[init-last]{bookauthor}%
+	}\newunit
+	\printfield{booktitle}%
+	\iffieldundef{edition}{}{\printfield{edition}, }%
+	%\usebibmacro{publication}%
+	\iflistundef{organization}{}{%
+		, \printlist{organization}%
+		\iffieldundef{venue}{}{%
+			, \printfield{venue}%
+		}%
+	}%
+	\iflistundef{publisher}{}{, \printlist{publisher}}\iflistundef{location}{}{, \printlist{location}}%
+	\iffieldundef{pages}{}{, \printfield{pages}}\newunit%
+	%\usebibmacro{eprint-info}\newunit%
+	\usebibmacro{eprint}\newunit%
+	\iffieldundef{url}{}{\printfield{urldate}\addspace\usebibmacro{url-date}}.
+}
+
+\DeclareBibliographyDriver{report}{%
+	\ifnameundef{author}{\ifnameundef{editor}{\printlist{institution}}{}}{}%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%%
+	\printfield{title}\newunit%
+	\ifnameundef{author}{%
+		\ifnameundef{editor}{%
+			\iffieldundef{usera}{%
+				\printlist{institution}%
+			}{%
+				\printfield{usera}
+			}%
+		}{%
+			\printlist{institution}%
+		}
+	}{%
+		\printlist{institution}%
+	}
+}
+
+\DeclareBibliographyDriver{patent}{%
+	\usebibmacro{author-or-dash} %
+	\usebibmacro{year-letter}, %%
+	\printfield{title}, %
+	\iflistundef{location}{}{\printlist{location} }%
+	Patent \printfield{number}.
+}
+
+\DeclareBibliographyDriver{reference}{%
+	\ifnameundef{editor}{%
+		\ifnameundef{author}{%
+			%do nothing in the refernces
+		}{%
+			\usebibmacro{author-or-dash} %
+		\usebibmacro{year-letter}, %
+		\printfield{title}, %
+		\iffieldundef{edition}{}{\printfield{edition}, }%
+		\printlist{publisher}%
+		\iffieldundef{location}{}{\printfield{location}}.%
+		}%
+	}{%
+		\usebibmacro{editor-or-dash} %
+		\usebibmacro{year-letter}, %
+		\printfield{title}, %
+		\iffieldundef{edition}{}{\printfield{edition}, }%
+		\printlist{publisher}%
+		\iffieldundef{location}{}{\printfield{location}}.%
+	}%
+}
+\DeclareBibliographyAlias{mvreference}{reference}
+\DeclareBibliographyAlias{manual}{reference}
+\DeclareBibliographyAlias{inproceedings}{inbook}
+\DeclareBibliographyAlias{inreference}{inbook}
+
+\DeclareBibliographyDriver{thesis}{%
+	\usebibmacro{author-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\printfield{type}\newunit%
+	\printlist{institution}\newunit%
+	%\iflistundef{location}{}{, \printlist{location}}.%
+	\printlist{location}\newunit%
+	\printfield{howpublished}\newunit%
+	\usebibmacro{url-date}.
+}
+
+\DeclareBibliographyDriver{online}{%
+	\usebibmacro{author-or-dash}\addspace%
+	\usebibmacro{year-letter}, %
+	\printfield{title}, %
+	\iffieldundef{subtitle}{}{\printfield{subtitle}, }
+	\iffieldundef{maintitle}{}{\printfield[plain]{maintitle}, }%
+	\iflistundef{organization}{}{\printlist{organization}, }%
+	\usebibmacro{url-date}.%
+}
+
+\DeclareFieldFormat[video]{series}{\ifinteger{#1}{series #1}{#1}}
+\DeclareFieldFormat[video]{number}{\ifinteger{#1}{ep. #1}{#1}}
+
+\DeclareBibliographyDriver{video}{%
+	\ifnameundef{author}{%
+		\ifnameundef{editor}{%
+			\printlist{publisher}%
+		}{%
+			\usebibmacro{editor-or-dash}\addspace(prd.)%this uses editor for producer, which sort of fits but ought to be respect the editorrole - fill it in anyway
+		}%
+	}{%
+		%\let\allnamessuffix{ (dir.)}
+		\usebibmacro{author-or-dash}[last-init-dir]%
+	}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\iffieldundef{booktitle}{%
+		\printfield{title}%
+	}{%
+		\printfield[innertitle]{title}\newunit\printfield{booktitle}%
+	}\newunit%
+	\iffieldundef{series}{}{\printfield{series}}\newunit%
+	\iffieldundef{volume}{}{\printfield{volume}}\newunit%
+	\iffieldundef{number}{}{\printfield{number}}\newunit%
+	\iffieldundef{type}{}{\printfield{type}}\newunit%
+	\iflistundef{publisher}{}{\printlist{publisher}}\newunit%
+	\iffieldundef{month}{}{%
+		\iffieldundef{day}{}{%
+			\printfield{day}%
+		} \printfield{month}%
+	}\newunit%
+	\usebibmacro{url-date}%
+	\iffieldundef{howpublished}{}{\printfield{howpublished}}.%
+	%\usebibmacro{eprint}.
+}
+
+\DeclareLabeldate[video]{\field{origdate}\field{year}\field{date}\field{eventdate}\field{urldate}\literal{noddate}}
+\DeclareBibliographyAlias{audio}{video}
+\DeclareBibliographyAlias{movie}{video}
+\DeclareBibliographyAlias{music}{audio}
+
+\DeclareBibliographyDriver{letter}{\message{Warning: correspondence is not to be cited in UniSA-Harvard bibliographies.}}
+
+\DeclareBibliographyDriver{software}{%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\printfield{version}\newunit%
+	\printfield{type}\newunit%
+	\printlist{publisher}\newunit%
+	\usebibmacro{url-date}\newunit%
+}
+
+\DeclareBibliographyDriver{artwork}{\message{authoryear-unisa Warning: according to the specification ``Works of art and live performances cannot be easily recovered by readers, so describe them in detail in-text instead of referencing.''}}
+\DeclareBibliographyAlias{performance}{artwork}
+%\DeclareBibliographyDriver{image}{}%{\iffieldundef{crossref}{}{\nocite{\thefield{crossref}}}}
+
+\DeclareBibliographyDriver{*}{%
+	\textbf{Unsupported entry type \texttt{\printfield{entrytype}} for item \texttt{\printfield{entrykey}}}%
+}
+
+%\DeclareRobustCommand{\bibname}{References}
+\defbibheading{bibliography}[References]{%
+  \chapter*{References}%
+  \addcontentsline{toc}{chapter}{References}%
+  \markboth{#1}{#1}}
