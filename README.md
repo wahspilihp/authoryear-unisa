@@ -1,5 +1,5 @@
 # authoryear-unisa
-Biblatex style to comply with the UniSA Harvard referencing guide
+Biblatex style to comply with the  [Harvard UniSA referencing guide](https://lo.unisa.edu.au/pluginfile.php/438774/mod_book/chapter/39173/HRG%20January%202015%20final%20version.pdf), which is also explained [here](https://roadmap.unisa.edu.au)
 
 # Bibliography Style
 The BBX file meets many of the examples, complete with corrections which I assumed were intended (it standardises on British-format dates, for example).
@@ -15,16 +15,17 @@ There are some aspects of the specification which are ambiguous or unclear. Thes
 * Supplement issues are specified by using issue titles, which means that any issue title appears in the bibliography. There doesn't appear to be a suitable field for a series add-on or subtitle.
 * Types which should not produce a bibligraphy entry produce blank lines if cited. I can't find a way to make the BibliographyDriver delete the list entry it sits inside.
 * Eprint handling is decidedly wobbly - the official guide doesn't use them, most of the time, but I can't figure out a general automatable rule to follow.
+* Videos use author for both corporate authors and directors. This appears to be convention, but it means that the driver is forced to guess whether the name should be tagged "(dir.)". It does this based on whether the last author has a given name. I will at some point add support for single-named directors.
 
 ## Missing Types
 * ABS reports (given in the guide as a special type)
 * Hansard (neither online nor offline)
-* @Legislation and @Jurisdiction * these appear to be the same as the AGLC format, so I'll incorporate them later
+* @Legislation and @Jurisdiction — these appear to be the same as the AGLC format, so I'll incorporate them later
 * @Standard
 * @Misc
-* @Image is not supported * it should not appear in the bibliography, but the citation command ought to rewrite itself to specify the location and cite the containing work.
-* @InCollection should be aliased to @InBook
-* @Collection should be aliased to @Book
+* @Image is not supported — it should not appear in the bibliography, but the citation command ought to rewrite itself to specify the location and cite the containing work.
+* @InCollection should probably be aliased to @InBook
+* @Collection should probably be aliased to @Book
 * @Set is not implemented
 
 
