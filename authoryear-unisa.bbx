@@ -1,6 +1,9 @@
 \ProvidesFile{authoryear-unisa.bbx}
 [\abx@bbxid]
 
+% -*- LaTeX -*-
+%  vi:syntax=LaTeX
+
 \newcommand{\cmda}[1]{\global\def\da{#1}}
 \newcommand{\cmdb}{\cmda{C}}
 
@@ -37,14 +40,8 @@
 \InitializeBibliographyStyle{%
 	
 	\providecommand{\lastseenauthor}{dummy initial value}
-	\urlstyle{same} % set URLS to use body font, as per examples, while keeping the rest of the \url features. Note that the <> around URLs will always match the URL font 
+	\urlstyle{same} % set URLS to use body font, as per examples, while keeping the rest of the \url features. Note that the <> around URLs will always be set to match the URL font 
 }
-
-% \AtDataInput{%
-% 	\ifentrytype{image}{%
-% 		\iffieldundef{crossref}{\message{Warning: images should be cited by thier ccontianing document.}}{\nocite{\thefield{crossref}}}
-% 	}
-% }
 
 %\RequirePackage{csquotes}
  
@@ -73,8 +70,8 @@
 			(\csname \ayuprefix s\code\endcsname)%
 			\csgdef{\ayuprefix \code}{\csname \ayuprefix s\code\endcsname}}%
 	}%
-	\typeout{in ayumkshortlongc}
-	\expandafter\show\csname \ayuprefix #3\endcsname
+	%\typeout{in ayumkshortlongc}
+	%\expandafter\show\csname \ayuprefix #3\endcsname
 }
 %\show\ayuprefix
 % \ifdefvoid{\mdfivesum}{\global\let\mdfivesum\pdfmdfivesum}
@@ -84,17 +81,17 @@
 	\edef\longname{#2}
 	%\show\longname
 	\ayumkshortlongc[#1]{\longname}{\mdfivesum{\longname}}%
-	\typeout{returned to ayumkshortlong}
-	\expandafter\show\csname ayusl\mdfivesum{\longname}\endcsname
+	%\typeout{returned to ayumkshortlong}
+	%\expandafter\show\csname ayusl\mdfivesum{\longname}\endcsname
 }
 \newcommand{\ayushortlong}[1]{%
 	\ifcsvoid{\ayuprefix\mdfivesum{#1}}{%
 		#1%
-		\message{no short name (\ayuprefix\mdfivesum{#1}) for #1}%
+		%\message{no short name (\ayuprefix\mdfivesum{#1}) for #1}%
 	}{%
 		\csname \ayuprefix\mdfivesum{#1}\endcsname%
-		\message{found short name (ayusl\mdfivesum{#1}) for #1}%
-		\expandafter\show\csname ayusl\mdfivesum{#1}\endcsname
+		%\message{found short name (ayusl\mdfivesum{#1}) for #1}%
+		%\expandafter\show\csname ayusl\mdfivesum{#1}\endcsname
 	}%
 }
 
@@ -317,13 +314,9 @@
 	\usebibmacro{eprint}.%\usebibmacro{eprint-info}.
 }
 
+\DeclareBibliographyAlias{collection}{book}
+
 \DeclareBibliographyDriver{inbook}{%
-	% \ifnameundef{author}{%
-	% 	\printnames[last-init]{editor} \usebibmacro{ed-eds}%
-	% }{%
-	% 	%\printnames{author}
-	% 	\usebibmacro{author-or-dash}%
-	% } %
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
 	\printfield{title}\addspace in\addspace%
@@ -335,22 +328,23 @@
 		}%
 	}{
 		\printnames[init-last]{bookauthor}%
-	}\newunit
-	\printfield{booktitle}%
-	\iffieldundef{edition}{}{\printfield{edition}, }%
+	}\newunit%
+	\printfield{booktitle}\newunit%
+	\printfield{edition}\newunit%
 	%\usebibmacro{publication}%
 	\iflistundef{organization}{}{%
-		, \printlist{organization}%
-		\iffieldundef{venue}{}{%
-			, \printfield{venue}%
-		}%
+		\printlist{organization}%
+		\newunit\printfield{venue}\newunit%
 	}%
-	\iflistundef{publisher}{}{, \printlist{publisher}}\iflistundef{location}{}{, \printlist{location}}%
-	\iffieldundef{pages}{}{, \printfield{pages}}\newunit%
+	\printlist{publisher}\newunit%
+	\printlist{location}\newunit%
+	\printfield{pages}\newunit%
 	%\usebibmacro{eprint-info}\newunit%
 	\usebibmacro{eprint}\newunit%
 	\iffieldundef{url}{}{\printfield{urldate}\addspace\usebibmacro{url-date}}.
 }
+
+\DeclareBibliographyAlias{incollection}{inbook}
 
 \DeclareBibliographyDriver{report}{%
 	\ifnameundef{author}{\ifnameundef{editor}{\printlist{institution}}{}}{}%
@@ -373,32 +367,32 @@
 }
 
 \DeclareBibliographyDriver{patent}{%
-	\usebibmacro{author-or-dash} %
-	\usebibmacro{year-letter}, %%
-	\printfield{title}, %
-	\iflistundef{location}{}{\printlist{location} }%
+	\usebibmacro{author-or-dash}\newunit%
+	\usebibmacro{year-letter}\newunit%%
+	\printfield{title}\newunit%
+	\printlist{location}\addspace%
 	Patent \printfield{number}.
 }
 
 \DeclareBibliographyDriver{reference}{%
 	\ifnameundef{editor}{%
 		\ifnameundef{author}{%
-			%do nothing in the refernces
+			%do nothing in the refernces for works with no author or editor
 		}{%
-			\usebibmacro{author-or-dash} %
-		\usebibmacro{year-letter}, %
-		\printfield{title}, %
-		\iffieldundef{edition}{}{\printfield{edition}, }%
-		\printlist{publisher}%
-		\iffieldundef{location}{}{\printfield{location}}.%
+			\usebibmacro{author-or-dash}\addspace%
+			\usebibmacro{year-letter}\newunit%
+			\printfield{title}\newunit%
+			\printfield{edition}\newunit%
+			\printlist{publisher}\newunit%
+			\printlist{location}.%
 		}%
 	}{%
-		\usebibmacro{editor-or-dash} %
-		\usebibmacro{year-letter}, %
-		\printfield{title}, %
-		\iffieldundef{edition}{}{\printfield{edition}, }%
-		\printlist{publisher}%
-		\iffieldundef{location}{}{\printfield{location}}.%
+		\usebibmacro{editor-or-dash}\addspace%
+		\usebibmacro{year-letter}\newunit%
+		\printfield{title}\newunit%
+		\printfield{edition}\newunit%
+		\printlist{publisher}\newunit%
+		\printlist{location}.%
 	}%
 }
 \DeclareBibliographyAlias{mvreference}{reference}
@@ -419,12 +413,12 @@
 }
 
 \DeclareBibliographyDriver{online}{%
-	\usebibmacro{author-or-dash}\addspace%
-	\usebibmacro{year-letter}, %
-	\printfield{title}, %
-	\iffieldundef{subtitle}{}{\printfield{subtitle}, }
-	\iffieldundef{maintitle}{}{\printfield[plain]{maintitle}, }%
-	\iflistundef{organization}{}{\printlist{organization}, }%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\printfield{subtitle}\newunit%
+	\printfield[plain]{maintitle}\newunit%
+	\printlist{organization}\newunit%
 	\usebibmacro{url-date}.%
 }
 

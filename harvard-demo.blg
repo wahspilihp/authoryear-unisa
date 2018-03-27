@@ -1,0 +1,209 @@
+[0] Config.pm:354> INFO - This is Biber 2.7
+[0] Config.pm:357> INFO - Logfile is 'harvard-demo.blg'
+[43] biber:303> INFO - === Tue Mar 27, 2018, 14:20:12
+[65] Biber.pm:359> INFO - Reading 'harvard-demo.bcf'
+[200] Biber.pm:835> INFO - Found 1 citekeys in bib section 0
+[200] Biber.pm:835> INFO - Found 13 citekeys in bib section 1
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[201] Biber.pm:835> INFO - Found 13 citekeys in bib section 2
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[201] Biber.pm:835> INFO - Found 3 citekeys in bib section 3
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[201] Biber.pm:835> INFO - Found 5 citekeys in bib section 4
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[201] Biber.pm:835> INFO - Found 4 citekeys in bib section 5
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[201] Biber.pm:835> INFO - Found 2 citekeys in bib section 6
+[201] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 3 citekeys in bib section 7
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 1 citekeys in bib section 8
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 4 citekeys in bib section 9
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 2 citekeys in bib section 10
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 11
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 2 citekeys in bib section 12
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[202] Biber.pm:835> INFO - Found 3 citekeys in bib section 13
+[202] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 6 citekeys in bib section 14
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 4 citekeys in bib section 15
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 3 citekeys in bib section 16
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 3 citekeys in bib section 17
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 4 citekeys in bib section 18
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 6 citekeys in bib section 19
+[203] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[203] Biber.pm:835> INFO - Found 4 citekeys in bib section 20
+[204] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[204] Biber.pm:835> INFO - Found 7 citekeys in bib section 21
+[204] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[204] Biber.pm:835> INFO - Found 4 citekeys in bib section 22
+[204] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[204] Biber.pm:835> INFO - Found 3 citekeys in bib section 23
+[204] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[204] Biber.pm:832> INFO - Using all citekeys in bib section 24
+[204] Biber.pm:835> INFO - Found 0 citekeys in bib section 0
+[346] Biber.pm:3670> INFO - Processing section 0
+[362] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[372] bibtex.pm:1435> INFO - Decoding LaTeX character macros into UTF-8
+[385] bibtex.pm:1292> INFO - Found BibTeX data source 'bibliography.bib'
+[397] Utils.pm:164> WARN - Entry 'UniSA-HRG' (bibliography.bib): Invalid format '200=18-03-28' of date field 'urldate' - ignoring
+[402] Utils.pm:164> WARN - BibTeX subsystem: /var/folders/5z/_g3ynkpx5374s8lcb0yfyp700000gp/T/pswWhohUkp/bibliography.bib_18121.utf8, line 4, warning: 23 characters of junk seen at toplevel
+[402] Utils.pm:164> WARN - BibTeX subsystem: /var/folders/5z/_g3ynkpx5374s8lcb0yfyp700000gp/T/pswWhohUkp/bibliography.bib_18121.utf8, line 748, warning: 95 characters of junk seen at toplevel
+[411] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[411] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[411] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[411] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[413] Biber.pm:3670> INFO - Processing section 1
+[414] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 1
+[449] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[449] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[449] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[449] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[461] Biber.pm:3670> INFO - Processing section 2
+[461] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 2
+[519] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[519] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[519] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[519] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[531] Biber.pm:3670> INFO - Processing section 3
+[532] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 3
+[546] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[546] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[546] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[546] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[553] Biber.pm:3670> INFO - Processing section 4
+[554] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 4
+[575] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[575] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[575] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[576] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[582] Biber.pm:3670> INFO - Processing section 5
+[583] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 5
+[585] Utils.pm:164> WARN - Overwriting field 'year' with year value from field 'date' for entry 'Giedroyc2010'
+[610] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[610] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[611] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[611] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[617] Biber.pm:3670> INFO - Processing section 6
+[617] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 6
+[630] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[631] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[631] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[631] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[634] Biber.pm:3670> INFO - Processing section 7
+[634] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 7
+[657] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[657] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[657] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[657] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[661] Biber.pm:3670> INFO - Processing section 8
+[661] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 8
+[672] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[673] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[673] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[673] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[675] Biber.pm:3670> INFO - Processing section 9
+[675] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 9
+[689] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[689] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[689] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[689] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[693] Biber.pm:3670> INFO - Processing section 10
+[693] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 10
+[704] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[704] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[704] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[705] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[708] Biber.pm:3670> INFO - Processing section 12
+[709] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 12
+[721] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[721] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[721] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[721] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[723] Biber.pm:3670> INFO - Processing section 13
+[724] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 13
+[737] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[737] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[737] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[737] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[740] Biber.pm:3670> INFO - Processing section 14
+[741] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 14
+[777] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[777] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[777] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[777] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[783] Biber.pm:3670> INFO - Processing section 15
+[784] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 15
+[802] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[802] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[802] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[802] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[808] Biber.pm:3670> INFO - Processing section 16
+[808] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 16
+[824] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[824] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[824] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[824] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[827] Biber.pm:3670> INFO - Processing section 17
+[827] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 17
+[841] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[841] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[841] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[841] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[845] Biber.pm:3670> INFO - Processing section 18
+[845] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 18
+[869] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[869] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[869] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[869] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[874] Biber.pm:3670> INFO - Processing section 19
+[874] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 19
+[901] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[901] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[901] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[901] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[907] Biber.pm:3670> INFO - Processing section 20
+[907] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 20
+[909] Utils.pm:164> WARN - month field 'apr' in entry 'Millward2008' is not an integer - this will probably not sort properly.
+[928] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[928] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[929] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[929] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[934] Biber.pm:3670> INFO - Processing section 21
+[934] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 21
+[957] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[958] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[958] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[958] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[965] Biber.pm:3670> INFO - Processing section 22
+[965] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 22
+[984] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[984] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[984] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[984] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[990] Biber.pm:3670> INFO - Processing section 23
+[990] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliography.bib' for section 23
+[1012] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1013] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1013] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[1013] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[1016] Biber.pm:3670> INFO - Processing section 24
+[1016] Biber.pm:3840> INFO - Looking for bibtex format file 'biblatex-examples.bib' for section 24
+[1153] bibtex.pm:1435> INFO - Decoding LaTeX character macros into UTF-8
+[1171] bibtex.pm:1292> INFO - Found BibTeX data source '/opt/local/share/texmf-texlive/bibtex/bib/biblatex/biblatex/biblatex-examples.bib'
+[1488] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1488] UCollate.pm:68> INFO - Overriding locale 'en-AU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1489] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'en-AU'
+[1489] Biber.pm:3505> INFO - No sort tailoring available for locale 'en-AU'
+[1579] bbl.pm:608> INFO - Writing 'harvard-demo.bbl' with encoding 'UTF-8'
+[1615] bbl.pm:712> INFO - Output to harvard-demo.bbl
+[1615] Biber.pm:109> INFO - WARNINGS: 5
