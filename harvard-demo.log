@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017/MacPorts 2017_2) (preloaded format=xelatex 2017.12.28)  27 MAR 2018 14:22
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017/MacPorts 2017_2) (preloaded format=xelatex 2017.12.28)  27 MAR 2018 14:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,17 +409,21 @@ File: fc-english.def 2013/08/17
 Package biblatex Warning: Macro 'eprint' already defined.
 (biblatex)                Using \renewbibmacro.
 
-)
-Package biblatex Info: Trying to load citation style 'authoryear-unisa'...
-Package biblatex Info: ... file 'authoryear-unisa.cbx' found.
- (./authoryear-unisa.cbx
-File: authoryear-unisa.cbx 2016/12/05 v3.7 biblatex citation style (PK/JW/AB)
-Package biblatex Info: Redefining '\cite'.
-Package biblatex Info: Redefining '\parencite'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcitetext'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\textcite'.
+! Undefined control sequence.
+l.340 ^^I\printlist
+                   {publisher}\newunit%
+? X
+ 
+Here is how much of TeX's memory you used:
+ 9069 strings out of 493005
+ 162345 string characters out of 6136281
+ 503410 words of memory out of 5000000
+ 12976 multiletter control sequences out of 15000+600000
+ 3648 words of font info for 15 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 47i,1n,66p,8841b,3426s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.
+ning '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
 
 (/opt/local/share/texmf-texlive/tex/latex/xpatch/xpatch.sty
