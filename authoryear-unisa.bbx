@@ -4,6 +4,14 @@
 % -*- LaTeX -*-
 %  vi:syntax=LaTeX
 
+\usepackage{iftex}
+
+\ifPDFTeX
+\let\mdfivesum\pdfmdfivesum
+\else
+\relax
+\fi
+
 \newcommand{\cmda}[1]{\global\def\da{#1}}
 \newcommand{\cmdb}{\cmda{C}}
 
@@ -53,7 +61,7 @@
 \gdef\ayuprefix{ayusl}
 \newcommand{\ayumkshortlongc}[3][]{%
 	\edef\code{#3}
-	\typeout{ayumlshortlongc >>#1<< >>#2<< >>#3<<}
+	%\typeout{ayumlshortlongc >>#1<< >>#2<< >>#3<<}
 	%\gdef\ayuprefix{ayusl}
 	%\ifcsvoid{\ayuprefix s#3}{\global\expandafter\let\csname\ayuprefix s#3\endcsname#1}{\relax}%
 	\ifcsvoid{\ayuprefix s#3}{\csxdef{\ayuprefix s#3}{#1}}{}%
@@ -107,14 +115,14 @@
 }
 \AtDataInput{%
 	\ifnameundef{shortauthor}{%
-		\typeout{there's no shorter name to add}
+		\relax%\typeout{there's no shorter name to add}
 	}{%
-		\typeout{matching shortname: \printnames[match]{shortauthor}}
+		%\typeout{matching shortname: \printnames[match]{shortauthor}}
 		\indexnames[match]{shortauthor}
 	}
-	\message{processed item \thefield{citekey}}
-	\expandafter\show\csname sl\mdfivesum{Human Rights and Equal Opportunity Commission}\endcsname
-
+	%\message{processed item \thefield{citekey}}
+	%\expandafter\show\csname sl\mdfivesum{Human Rights and Equal Opportunity Commission}\endcsname
+	\relax%
 }
 % \def\woohoo{This worked}
 
@@ -150,6 +158,19 @@
 	}%
 }
 
+\newbibmacro{day-month}{%TODO support multi-year ranges - check with UNISA how to
+	\iffieldundef{endday}{% lasts just one day
+		\printfield{day}\addspace\printfield{month}%
+	}{% multiple days
+		\iffieldsequal{month}{endmonth}{% but only one month
+			\printfield{day}--\printfield{endday}\addspace\printfield{month}%
+		}{%
+			\printfield{day}\addspace\printfield{month}--\printfield{endday}\addspace\printfield{endmonth}%
+		}%
+	}%
+}
+%\newbibmacro{day-month}{\mkbibdaterange}
+
 \newbibmacro{ed-eds}{\ifthenelse{\value{editor}=1}{(ed.)}{(eds.)}}
 \newbibmacro{publication}{\newunit\printlist{publisher}\newunit\printlist{location}\newunit}
 
@@ -177,7 +198,7 @@
 \DeclareFieldFormat[book]{title}{\emph{#1}}
 \DeclareFieldFormat{booktitle}{\emph{#1}}
 \DeclareFieldFormat{journaltitle}{\emph{#1}}
-\DeclareFieldFormat[article,inbook,incollection,inproceedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}
+\DeclareFieldFormat[article,inbook,incollection,inprocedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}
 \DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}
 \DeclareFieldFormat{innertitle}{\enquote{#1}}
 % \DeclareNameFormat{last-init}{\usebibmacro{family-init}{\namepartfamily}
@@ -236,8 +257,8 @@
 		%}{revised}{rev.}% per example in guide
 	}%
 }
-\DeclareFieldFormat{volume}{\ifinteger{#1}{vol. #1}{#1}}
-\DeclareFieldFormat[article]{number}{\ifinteger{#1}{no. #1}{not integer #1}}
+\DeclareFieldFormat{volume}{\ifinteger{#1}{vol. #1}{not integer ovlume#1}}
+\DeclareFieldFormat[article, inproceedings]{number}{\ifinteger{#1}{no. #1}{\message{not integer issue number\thefield{entrykey}}#1}}
 \DeclareNameFormat{translator}{%
 	\ifthenelse{\value{listcount}=\value{liststart}}{trans.\addspace }{}%
 	\ifdefvoid{\namepartgiven}{Blank name}{\namepartgiveni}~\ifdefvoid{\namepartprefix}{}{\namepartprefix{}~}\namepartfamily\ifthenelse{\value{listcount}<\numexpr\value{liststop}-1}{, }{\ifthenelse{\value{listcount}=\numexpr\value{liststop}-1}{ \& }{}}}
@@ -363,7 +384,11 @@
 		}
 	}{%
 		\printlist{institution}%
-	}
+	}\newunit
+	\iflistundef{institution}{\printlist{publisher}}{}\newunit%
+	\printlist{location}\newunit%
+	\usebibmacro{url-date}
+	.%
 }
 
 \DeclareBibliographyDriver{patent}{%
@@ -397,7 +422,7 @@
 }
 \DeclareBibliographyAlias{mvreference}{reference}
 \DeclareBibliographyAlias{manual}{reference}
-\DeclareBibliographyAlias{inproceedings}{inbook}
+%\DeclareBibliographyAlias{inprocedings}{inbook}
 \DeclareBibliographyAlias{inreference}{inbook}
 
 \DeclareBibliographyDriver{thesis}{%
@@ -442,18 +467,19 @@
 	}{%
 		\printfield[innertitle]{title}\newunit\printfield{booktitle}%
 	}\newunit%
-	\iffieldundef{series}{}{\printfield{series}}\newunit%
-	\iffieldundef{volume}{}{\printfield{volume}}\newunit%
-	\iffieldundef{number}{}{\printfield{number}}\newunit%
-	\iffieldundef{type}{}{\printfield{type}}\newunit%
-	\iflistundef{publisher}{}{\printlist{publisher}}\newunit%
-	\iffieldundef{month}{}{%
-		\iffieldundef{day}{}{%
-			\printfield{day}%
-		} \printfield{month}%
-	}\newunit%
-	\usebibmacro{url-date}%
-	\iffieldundef{howpublished}{}{\printfield{howpublished}}.%
+	\printfield{series}\newunit%
+	\printfield{volume}\newunit%
+	\printfield{number}\newunit%
+	\printfield{type}\newunit%
+	\printlist{publisher}\newunit%
+	% \iffieldundef{month}{}{%
+	% 	\iffieldundef{day}{}{%
+	% 		\printfield{day}%
+	% 	} \printfield{month}%
+	% }\newunit%
+	\usebibmacro{day-month}\newunit%
+	\usebibmacro{url-date}\newunit%
+	\printfield{howpublished}.%
 	%\usebibmacro{eprint}.
 }
 
@@ -478,6 +504,19 @@
 \DeclareBibliographyAlias{performance}{artwork}
 %\DeclareBibliographyDriver{image}{}%{\iffieldundef{crossref}{}{\nocite{\thefield{crossref}}}}
 
+\DeclareBibliographyDriver{inproceedings}{%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield{title}\newunit%
+	\printfield{booktitle}\newunit%
+	\printlist{organization}\newunit%
+	\printfield{venue}\newunit%
+	\usebibmacro{day-month}\newunit%
+	\printfield{doi}\newunit%
+	\usebibmacro{url-date}\newunit%
+	.%
+}
+
 \DeclareBibliographyDriver{*}{%
 	\textbf{Unsupported entry type \texttt{\printfield{entrytype}} for item \texttt{\printfield{entrykey}}}%
 }
@@ -486,4 +525,6 @@
 \defbibheading{bibliography}[References]{%
   \chapter*{References}%
   \addcontentsline{toc}{chapter}{References}%
-  \markboth{#1}{#1}}
+  \markboth{#1}{#1}%
+  \raggedright%
+  }
