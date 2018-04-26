@@ -19,7 +19,12 @@
 \newbibmacro*{finentry}{}
 \renewrobustcmd*{\bibinitperiod}{}
 \setlength{\bibhang}{0pt}
-\DefineBibliographyStrings{australian}{lines={lines},line={line},circa={c.}}
+\DefineBibliographyStrings{australian}{%
+	lines={lines},
+	line={line},
+	circa={c.},
+	bibliography={References}
+}
 \renewcommand{\newunitpunct}{, }
 
 %\def\bysame{\leavevmode\hbox to3em{\hrulefill}\thinspace} % from ams document classes
@@ -347,7 +352,7 @@
 		}{%
 			\ifnameundef{editor}{}{\printnames{editor}\addspace\usebibmacro{ed-eds}}%
 		}%
-	}{
+	}{%
 		\printnames[init-last]{bookauthor}%
 	}\newunit%
 	\printfield{booktitle}\newunit%
@@ -387,7 +392,7 @@
 	}\newunit
 	\iflistundef{institution}{\printlist{publisher}}{}\newunit%
 	\printlist{location}\newunit%
-	\usebibmacro{url-date}
+	\usebibmacro{url-date}%
 	.%
 }
 
@@ -533,10 +538,10 @@
 	\textbf{Unsupported entry type \texttt{\printfield{entrytype}} for item \texttt{\printfield{entrykey}}}%
 }
 
-%\DeclareRobustCommand{\bibname}{References}
-\defbibheading{bibliography}[References]{%
-  \chapter*{References}%
-  \addcontentsline{toc}{chapter}{References}%
-  \markboth{#1}{#1}%
-  \raggedright%
-  }
+% \renewcommand{\bibname}{References}
+% \defbibheading{bibliography}[\bibname]{%
+%   \chapter*{#1}%
+%   \addcontentsline{toc}{chapter}{References}%
+%   \markboth{#1}{#1}%
+%   \raggedright%
+%   }

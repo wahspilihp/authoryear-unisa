@@ -1,6 +1,6 @@
 \documentclass[a4paper,australian,oneside,12pt,footlines=3]{scrbook}%pagenumber=bottomcenter,
 \usepackage{babel}
-\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear-unisa,terseinits=true]{biblatex}
+\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear-unisa,terseinits=true,backend=biber]{biblatex}
 %\usepackage[citestyle=authoryear-unisa,bibstyle=debug,terseinits=true]{biblatex}
 %\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear,terseinits=true,giveninits=true]{biblatex
 \addbibresource{bibliography.bib}
@@ -20,6 +20,10 @@
 \usepackage{etoolbox}
 \usepackage{booktabs}
 \usepackage{mwe}
+\usepackage{listings}
+\lstset{%
+	basicstyle=\ttfamily
+}
 
 \usepackage{setspace}
 %\singlespacing
@@ -73,7 +77,9 @@ Citations are not yet working correctly.
 
 This document is both an example of the use of the reference style (allowing comparison to the official specification), and a set of test cases for semi-manual regression testing.
 
-It requires e-\TeX.
+
+
+
 
 \chapter*{Disclaimer}
 The \biblatex{} BBX code is principally my own work, although it draws from the examples given in the \biblatex{} documentation and elsewhere. The sample text is drawn almost verbatim from \citetitle{UniSA-HRG}. The CBX code is as-yet largely from \biblatex.
@@ -81,6 +87,18 @@ The \biblatex{} BBX code is principally my own work, although it draws from the 
 \tableofcontents
 
 \mainmatter
+\chapter{Usage}
+To produce your bibliography, you need to run latex, then biber, then latex, just like when using bibtex.
+For example:
+\begin{lstlisting}[language=bash]
+	xelatex your_file
+	biber your_file
+	xelatex your_file
+\end{lstlisting}
+
+It requires e-\TeX, that is, almost any modern \TeX{} engine. 
+It has been tested in Xe\LaTeX{} and PDF\LaTeX. 
+It also requires an MD5 command, and if it isn't called \verb|\mdfivesum| or \verb|\pdfmdfivesum| you'll need to add \verb|\let\mdfivesum\yourmdfivesum| to your preamble.
 %--------------------------------------------------------------------------
 %
 %
@@ -519,5 +537,5 @@ In season two’s penultimate episode \textcite{GameOfThrones}, the\textelp{}
 % \end{refsection}
 %\nocite{*}
 %\parencite{*}
-\printbibliography
+\printbibliography[heading=bibintoc]
 \end{document}

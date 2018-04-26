@@ -2,7 +2,10 @@
 #builder=pdflatex 
 builder=xelatex 
 
-default: all
+#add your preferred pdf reader
+viewer=open
+
+default: view
 
 clean:
 	rm harvard-demo.bcf harvard-demo.blg harvard-demo.log harvard-demo.aux harvard-demo.run.xml harvard-demo.toc harvard-demo.out harvard-demo.bbl
@@ -17,3 +20,6 @@ harvard-demo.bbl: harvard-demo.bcf bibliography.bib
 
 harvard-demo.bcf: harvard-demo.tex
 	$(builder) harvard-demo.tex
+
+view: harvard-demo.pdf
+	$(viewer) harvard-demo.pdf
