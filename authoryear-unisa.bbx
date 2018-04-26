@@ -391,6 +391,18 @@
 	.%
 }
 
+\DeclareFieldFormat{lecturetype}{{#1}}
+\DeclareBibliographyDriver{lecture}{%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	\printfield[lecturetype]{type}\newunit%
+	\printfield{title}\newunit%
+	\printlist{location}\newunit%
+	\printdate{}\newunit%
+	\iffieldundef{url}{}{\usebibmacro{url-date}}\newunit%
+	\usebibmacro{eprint}.%\usebibmacro{eprint-info}.
+}
+
 \DeclareBibliographyDriver{patent}{%
 	\usebibmacro{author-or-dash}\newunit%
 	\usebibmacro{year-letter}\newunit%%
