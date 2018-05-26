@@ -202,6 +202,7 @@
 \DeclareFieldFormat{plain}{#1}
 \DeclareFieldFormat[book]{title}{\emph{#1}}
 \DeclareFieldFormat{booktitle}{\emph{#1}}
+\DeclareFieldFormat{eventtitle}{\emph{#1}}
 \DeclareFieldFormat{journaltitle}{\emph{#1}}
 \DeclareFieldFormat[article,inbook,incollection,inprocedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}
 \DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}
@@ -284,7 +285,10 @@
     {\printfield{eprint}}
     {\printfield[eprint:\strfield{eprinttype}]{eprint}}}
 
-\DeclareListFormat{shortlong}{\ayushortlong{#1}}
+\DeclareListFormat{shortlong}{\ayushortlong{#1}%
+\ifthenelse{\value{listcount}<\value{liststop}}
+    {\addcomma\space}
+    {}}
 \DeclareListAlias{organization}{shortlong}
 \DeclareListAlias{institution}{shortlong}
 
@@ -459,6 +463,7 @@
 	\usebibmacro{year-letter}\newunit%
 	\printfield{title}\newunit%
 	\printfield{subtitle}\newunit%
+	\printfield{type}\newunit%
 	\printfield[plain]{maintitle}\newunit%
 	\printlist{organization}\newunit%
 	\usebibmacro{url-date}.%
@@ -525,6 +530,7 @@
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
 	\printfield{title}\newunit%
+	\iffieldundef{booktitle}{\printfield{eventtitle}\newunit}{}%
 	\printfield{booktitle}\newunit%
 	\printlist{organization}\newunit%
 	\printfield{venue}\newunit%
