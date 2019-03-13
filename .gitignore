@@ -235,3 +235,7 @@ TSWLatexianTemp*
 
 test/
 *.pdf
+
+harvard-demo.pdf
+
+*.pdf
