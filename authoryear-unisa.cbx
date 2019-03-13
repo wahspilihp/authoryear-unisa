@@ -1,42 +1,361 @@
-\ProvidesFile{authoryear-unisa.cbx}
-[\abx@cbxid]
+\ProvidesFile{authoryear-unisa.cbx}%
+[\abx@cbxid]%
+%
+\def\cbx@classictextcite\relax
+\ExecuteBibliographyOptions{labeldateparts,uniquename,uniquelist,autocite=inline,useprefix=true}%
+\ExecuteBibliographyOptions{citecounter,citetracker,maxcitenames=3}%
+\renewcommand*{\iffinalcitedelim}{\iflastcitekey}%
+%
+%
+\RequireCitationStyle{authoryear}%
+%
+% Inside \printtext, argumentless macros also need '%' afterwards%
+% otherwise the newlines are spaces%
+\renewbibmacro*{cite:labelyear+extrayear}{%%
+  \iffieldundef{labelyear}%
+    {}%
+    {\printtext[bibhyperref]{%%
+     \ifdefstring\blx@dateformat@labeldate{edtf}%
+       {}%
+       {\datecircaprint}%%
+     \dateeraprintpre{labelyear}%%
+     \printfield{labelyear}%%
+     \printfield{extrayear}%%
+     \dateuncertainprint%%
+     \iffieldsequal{labeldateera}{labelenddateera}{}%
+       {\dateeraprint{labelyear}}%%
+     \ifdefstring\blx@dateformat@labeldate{edtf}%
+       {\datecircaprintedtf}%
+       {}%%
+     \iffieldundef{labelendyear}%
+       {}%
+       {\iffieldsequal{labelyear}{labelendyear}{}%
+        {\ifdefstring\blx@dateformat@labeldate{edtf}%
+          {\slash}% strict EDTF%
+          {\bibdaterangesep%
+           \enddatecircaprint}%%
+         \dateeraprintpre{labelendyear}%%
+         \printfield{labelendyear}%%
+         \enddateuncertainprint%
+         \ifdefstring\blx@dateformat@labeldate{edtf}%
+           {\enddatecircaprintedtf}%
+           {}%%
+         \dateeraprint{labelendyear}}}}}}%
+%
+%
+\RequirePackage{xpatch}%
+\xpatchbibmacro{name:delim}%
+  {\lbx@finalnamedelim{#1}}%
+  {\printdelim{finalnamedelim}}%
+  {}{}%
+%
+% Set the global context to use an ampersand%
+\DeclareDelimFormat{finalnamedelim}{%%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%%
+  \addspace\&\space}%
+%
+% Set the textcite context specifically to use the "and" string%
+\DeclareDelimFormat[textcite]{finalnamedelim}{%%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%%
+  \addspace\bibstring{and}\space}%
+%
+\DeclareNameAlias{sortname}{family-given}%
+\DeclareNameAlias{default}{family-given}%
+\renewrobustcmd*{\bibnamedelimi}{\bibnamedelima}%
+%
+%
+\DeclareSortingNamekeyTemplate[corp]{
+  \keypart{
+    \namepart{long}
+  }
+}
 
-\ExecuteBibliographyOptions{labeldateparts,uniquename,uniquelist,autocite=inline, maxcitenames=3}
+\DeclareUniquenameTemplate[corp]{
+  \namepart{short}
+  \namepart{long}
+}
 
-\renewcommand*{\iffinalcitedelim}{\iflastcitekey}
+\DeclareNameFormat{labelname}{\thefield{uniquepart}}
+\DeclareNameFormat{sortname}{\thefield{uniquepart}}
+%
+% \show\parencite%
+% \xapptobibdriver{\parencite}{\renewcommand*{\finalnamedelim}{\addspace\&\space}}{\show\parencite}{\typeout{failed to append to \parencite}}%
+%
+\xpatchbibmacro{name:delim}%
+  {\lbx@finalnamedelim{#1}}%
+  {\printdelim{finalnamedelim}}%
+  {}{}%
+%
+\DeclareDelimFormat{finalnamedelim}{\addspace\&\space}%
+\DeclareDelimFormat[textcite]{finalnamedelim}{%%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%%
+  \addspace\bibstring{and}\space}%
+%
+%
+%%% nametracker%
+% provides \cbx@ifnameseen to check if a name was seen already%
+% requires use of \cbx@nametracker{\thefield{hash}}%
+% in the appropriate place%
+\newrobustcmd*{\cbx@nametracker@global}[1]{%%
+  \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}%
+    {}%
+    {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}%
+%
+\newrobustcmd*{\cbx@nametracker@context}[1]{%%
+  \iftoggle{blx@footnote}%
+    {\xifinlistcs{#1}{cbx@fseen@names@\the\c@refsection}%
+       {}%
+       {\listcsxadd{cbx@fseen@names@\the\c@refsection}{#1}}}%
+    {\xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}%
+       {}%
+       {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}}%
+%
+\newrobustcmd*{\cbx@ifnameseen@global}[1]{%%
+  \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}}%
+%
+\newrobustcmd*{\cbx@ifnameseen@context}[1]{%%
+  \iftoggle{blx@footnote}%%
+    {\xifinlistcs{#1}{cbx@fseen@names@\the\c@refsection}}%%
+    {\xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}}}%
+%
+\DeclareBibliographyOption[string]{nametracker}[true]{%%
+  \ifcsdef{blx@opt@nametracker@#1}%
+    {\csuse{blx@opt@nametracker@#1}}%
+    {\blx@err@invopt{nametracker=#1}{}}}%
+%
+\def\blx@opt@nametracker@global{%%
+  \let\cbx@ifnameseen\cbx@ifnameseen@global%
+  \let\cbx@nametracker\cbx@nametracker@global}%
+%
+\let\blx@opt@nametracker@true\blx@opt@nametracker@global%
+%
+\def\blx@opt@nametracker@false{%%
+  \protected\long\def\cbx@ifnameseen##1##2##3{##3}%%
+  \let\cbx@nametracker\relax}%
+%
+\def\blx@opt@nametracker@context{%%
+  \let\cbx@ifnameseen\cbx@ifnameseen@context%
+  \let\cbx@nametracker\cbx@nametracker@context}%
+%
+\appto\blx@secinit{%%
+  \ifcsundef{cbx@bseen@names@\the\c@refsection}%
+    {\global\cslet{cbx@bseen@names@\the\c@refsection}\@empty}%
+    {}%%
+  \ifcsundef{cbx@fseen@names@\the\c@refsection}%
+    {\global\cslet{cbx@fseen@names@\the\c@refsection}\@empty}%
+    {}}%
+%
+\InitializeCitationStyle{%%
+  \global\cslet{cbx@bseen@names@\the\c@refsection}\@empty%
+  \global\cslet{cbx@fseen@names@\the\c@refsection}\@empty}%
+%
+\ExecuteBibliographyOptions{nametracker=context}%
+%
+%%% namecounter%
+% defines \namecounter{<hash>}%
+% requires \cbx@countname{\thefield{hash}} in the appropriate place%
+\def\blx@namecount@global#1{%%
+  0\csuse{blx@namecount@\the\c@refsection @#1}%%
+}%
+\def\blx@namecount@context#1{%%
+  0%%
+  \iftoggle{blx@footnote}%
+    {\csuse{blx@fnnamecount@\the\c@refsection @#1}}%
+    {\csuse{blx@namecount@\the\c@refsection @#1}}%%
+}%
+%
+\protected\def\blx@aux@namecount#1#2{%%
+  \csnumgdef{blx@namecount@#1@#2}{%%
+    \csuse{blx@namecount@#1@#2}+1}}%
+\protected\def\blx@aux@fnnamecount#1#2{%%
+  \csnumgdef{blx@fnnamecount@#1@#2}{%%
+    \csuse{blx@fnnamecount@#1@#2}+1}}%
+%
+\let\abx@aux@namecount\@gobbletwo%
+\let\abx@aux@fnnamecount\@gobbletwo%
+%
+\AtEndDocument{%%
+  \let\abx@aux@namecount\@gobbletwo%
+  \let\abx@aux@fnnamecount\@gobbletwo}%
+%
+\def\blx@countname@global#1{%%
+  \ifbool{@filesw}%
+    {\ifbool{citetracker}%
+       {\immediate\write\@mainaux{%%
+          \string\abx@aux@namecount%
+          {\the\c@refsection}{#1}}}%
+       {}}%
+    {}}%
+%
+\def\blx@countname@context#1{%%
+  \ifbool{@filesw}%
+    {\ifbool{citetracker}%
+       {\immediate\write\@mainaux{%%
+          \iftoggle{blx@footnote}%
+            {\string\abx@aux@fnnamecount}%
+            {\string\abx@aux@namecount}%%
+          {\the\c@refsection}{#1}}}%
+       {}}%
+    {}}%
+%
+\DeclareBibliographyOption[boolean]{namecounter}[true]{%%
+  \ifcsdef{blx@opt@namecounter@#1}%
+    {\csuse{blx@opt@namecounter@#1}}%
+    {\blx@err@invopt{namecounter=#1}{}}}%
+\def\blx@opt@namecounter@true{%%
+  \let\cbx@namecount\blx@namecount@global%
+  \let\cbx@countname\blx@countname@global%
+  \let\abx@aux@namecount\blx@aux@namecount%
+  \let\abx@aux@fnnamecount\blx@aux@namecount%
+  \booltrue{citetracker}}%
+\def\blx@opt@namecounter@context{%%
+  \let\cbx@namecount\blx@namecount@context%
+  \let\cbx@countname\blx@countname@context%
+  \let\abx@aux@namecount\blx@aux@namecount%
+  \let\abx@aux@fnnamecount\blx@aux@fnnamecount%
+  \booltrue{citetracker}}%
+\def\blx@opt@namecounter@false{%%
+  \let\cbx@namecount\@gobbleone%
+  \let\cbx@countname\@gobbleone%
+  \let\abx@aux@namecount\@gobbletwo%
+  \let\abx@aux@fnnamecount\@gobbletwo}%
+%
+\ExecuteBibliographyOptions{namecounter=context}%
+%
+%%% name formats%
+\DeclareNameFormat{given-family}{%%
+  \ifsortingnamekeytemplatename{corp}%
+    {\usebibmacro{name:corp}%
+       {\namepartlong}%
+       {\empty}}%
+    {\ifgiveninits%
+       {\usebibmacro{name:given-family}%
+         {\namepartfamily}%
+         {\namepartgiveni}%
+         {\namepartprefix}%
+         {\namepartsuffix}}%
+       {\usebibmacro{name:given-family}%
+         {\namepartfamily}%
+         {\namepartgiven}%
+         {\namepartprefix}%
+         {\namepartsuffix}}}%%
+  \usebibmacro{name:andothers}}%
+%
+\DeclareNameFormat{family-given}{%%
+  \ifsortingnamekeytemplatename{corp}%
+    {\usebibmacro{name:corp}%
+       {\namepartlong}%
+       {\empty}}%
+    {\ifgiveninits%
+       {\usebibmacro{name:family-given}%
+         {\namepartfamily}%
+         {\namepartgiveni}%
+         {\namepartprefix}%
+         {\namepartsuffix}}%
+       {\usebibmacro{name:family-given}%
+         {\namepartfamily}%
+         {\namepartgiven}%
+         {\namepartprefix}%
+         {\namepartsuffix}}}%%
+  \usebibmacro{name:andothers}}%
+%
+\DeclareNameAlias{sortname}{family-given}%
+%
+\DeclareNameFormat{labelname}{%%
+  \ifuniquenametemplatename{corp}%
+    {\usebibmacro{labelname:corp}}%
+    {\usebibmacro{labelname:normal}}%%
+  \usebibmacro{name:andothers}%%
+  \cbx@nametracker{\thefield{hash}}%%
+  \cbx@countname{\thefield{hash}}}%
+%
+\newbibmacro{labelname:corp}{%%
+  \ifboolexpr{    test {\iffieldequalstr{uniquepart}{short}}%
+              and test {\ifnumgreater{\cbx@namecount{\thefield{hash}}}{1}}}%
+    {\cbx@ifnameseen{\thefield{hash}}%
+       {\usebibmacro{name:corp}%
+          {\empty}%
+          {\namepartshort}}%
+       {\usebibmacro{name:corp:both}%
+          {\namepartlong}%
+          {\namepartshort}}} %
+    {\usebibmacro{name:corp}%
+       {\namepartlong}%
+       {\empty}}}%
+%
+\newbibmacro{labelname:normal}{%%
+  \ifcase\value{uniquename}%%
+    \usebibmacro{name:family}%
+      {\namepartfamily}%
+      {\namepartgiven}%
+      {\namepartprefix}%
+      {\namepartsuffix}%%
+  \or%
+    \ifuseprefix%
+      {\usebibmacro{name:given-family}%
+        {\namepartfamily}%
+        {\namepartgiveni}%
+        {\namepartprefix}%
+        {\namepartsuffixi}}%
+      {\usebibmacro{name:given-family}%
+        {\namepartfamily}%
+        {\namepartgiveni}%
+        {\namepartprefixi}%
+        {\namepartsuffixi}}%%
+  \or%
+    \usebibmacro{name:given-family}%
+      {\namepartfamily}%
+      {\namepartgiven}%
+      {\namepartprefix}%
+      {\namepartsuffix}%%
+  \fi}%
+%
+\newbibmacro*{name:corp}[2]{%%
+  \usebibmacro{name:delim}{#1#2}%%
+  \usebibmacro{name:hook}{#1#2}%%
+  \ifdefvoid{#1}{}{\mkbibnamecorplong{#1}}%%
+  \ifdefvoid{#2}{}{\mkbibnamecorpshort{#2}}}%
+%
+\newbibmacro*{name:corp:both}[2]{%%
+  \usebibmacro{name:delim}{#1}%%
+  \usebibmacro{name:hook}{#1}%%
+  \mkbibnamecorplong{#1}%%
+  \ifdefvoid{#2}{}{\space\mkbibnamecorpshortintro{#2}}}%
+%
+\newcommand*\mkbibnamecorplong{\mkbibnamefamily}%
+\newcommand*\mkbibnamecorpshort{\mkbibnamecorplong}%
+\newcommand*{\mkbibnamecorpshortintro}[1]{({\mkbibnamecorpshort{#1}})}%
+%
+% \xpretocmd{\fullcite}{\begingroup\ExecuteBibliographyOptions{maxcitenames=}}%
+%
 
-
-\newbool{cbx:parens}
-
-\newbibmacro*{cite}{%
-  \iffieldundef{shorthand}
-    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
-       {\usebibmacro{cite:label}%
-        \setunit{\printdelim{nonameyeardelim}}}
-       {\printnames{labelname}%
-        \setunit{\printdelim{nameyeardelim}}}%
-     \usebibmacro{cite:labelyear+extrayear}}
-    {\usebibmacro{cite:shorthand}}}
-
-\newbibmacro*{citeyear}{%
-  \iffieldundef{shorthand}
-    {\iffieldundef{labelyear}
-       {\usebibmacro{cite:label}}
-       {\usebibmacro{cite:labelyear+extrayear}}}
-    {\usebibmacro{cite:shorthand}}}
-
-\newbibmacro*{textcite}{%
+\renewbibmacro*{textcite}{%
   \ifnameundef{labelname}
-    {\iffieldundef{shorthand}
-       {\usebibmacro{cite:label}%
+    {\iffieldundef{shorthand}{%
+      \show\cbx@classictextcite%
+      \ifdefvoid{\cbx@classictextcite}{%
+       \usebibmacro{cite:label}%
         \setunit{%
           \global\booltrue{cbx:parens}%
           \printdelim{nonameyeardelim}\bibopenparen}%
         \ifnumequal{\value{citecount}}{1}
           {\usebibmacro{prenote}}
           {}%
-        \usebibmacro{cite:labelyear+extrayear}}
-       {\usebibmacro{cite:shorthand}}}
+        \bibstring{editor}
+        \ifnameundef{author}{%
+          \typeout{no author}
+          \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
+          \iffieldundef{editortype}{%
+            \bibstring{editor}
+          }{%
+            \printfield{editortype}%
+          }%
+        }%
+        % hello
+        % \BibliographyWarning{printing year}
+        \usebibmacro{cite:labeldate+extradate}} %
+        {\cbx@classictextcite}}%
+      {\usebibmacro{cite:shorthand}}} %
     {\printnames{labelname}%
      \setunit{%
        \global\booltrue{cbx:parens}%
@@ -44,142 +363,113 @@
      \ifnumequal{\value{citecount}}{1}
        {\usebibmacro{prenote}}
        {}%
-     \usebibmacro{citeyear}}}
+     % \usebibmacro{citeyear}
+     % \mkbibparens{%
+        \ifnameundef{author}{%
+          \typeout{no author}
+          \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
+          \usebibmacro{editorstrg}
+        }{\BibliographyWarning{has author}}%
+        \printfield{labelyear}%
+     % }%
+     }%
+     }
 
-\newbibmacro*{cite:shorthand}{%
-  \printtext[bibhyperref]{\printfield{shorthand}}}
+\renewbibmacro*{editorstrg}{%from biblatex.def
+  \BibliographyWarning{in editorstrg}
+  \printtext[editortype]{%
+    \iffieldundef{editortype}
+      {\ifboolexpr{
+         test {\ifnumgreater{\value{editor}}{1}}
+         or
+         test {\ifandothers{editor}}
+       }
+         {eds}%changed
+         {\bibstring{editor}}}%changed
+      {\ifbibxstring{\thefield{editortype}}
+         {\ifboolexpr{
+            test {\ifnumgreater{\value{editor}}{1}}
+            or
+            test {\ifandothers{editor}}
+          }
+            {\bibstring{\thefield{editortype}s}}%changed
+            {\bibstring{\thefield{editortype}}}}%changed
+         {\thefield{editortype}}}}}
 
-\newbibmacro*{cite:label}{%
-  \iffieldundef{label}
-    {\printtext[bibhyperref]{\printfield[citetitle]{labeltitle}}}
-    {\printtext[bibhyperref]{\printfield{label}}}}
+\RequirePackage{xparse}
 
-% Inside \printtext, argumentless macros also need '%' afterwards
-% otherwise the newlines are spaces
-\newbibmacro*{cite:labelyear+extrayear}{%
-  \iffieldundef{labelyear}
-    {}
-    {\printtext[bibhyperref]{%
-     \ifdefstring\blx@dateformat@labeldate{edtf}
-       {}
-       {\datecircaprint}%
-     \dateeraprintpre{labelyear}%
-     \printfield{labelyear}%
-     \printfield{extrayear}%
-     \dateuncertainprint%
-     \iffieldsequal{labeldateera}{labelenddateera}{}
-       {\dateeraprint{labelyear}}%
-     \ifdefstring\blx@dateformat@labeldate{edtf}
-       {\datecircaprintedtf}
-       {}%
-     \iffieldundef{labelendyear}
-       {}
-       {\iffieldsequal{labelyear}{labelendyear}{}
-        {\ifdefstring\blx@dateformat@labeldate{edtf}
-          {\slash}% strict EDTF
-          {\bibdaterangesep
-           \enddatecircaprint}%
-         \dateeraprintpre{labelendyear}%
-         \printfield{labelendyear}%
-         \enddateuncertainprint
-         \ifdefstring\blx@dateformat@labeldate{edtf}
-           {\enddatecircaprintedtf}
-           {}%
-         \dateeraprint{labelendyear}}}}}}
+\ExplSyntaxOn
+\NewDocumentCommand{\TitleCase}{>{\SplitList{~}}m}
+ {
+  \seq_clear:N \l_capitalize_words_seq
+  \ProcessList{#1}{\CapitalizeFirst}
+  \seq_use:Nn \l_capitalize_words_seq { ~ }
+ }
+\NewDocumentCommand{\CapitalizeFirst}{m}
+ {
+  \capitalize_word:n { #1 }
+ }
 
-\newbibmacro*{textcite:postnote}{%
-  \iffieldundef{postnote}
-    {\ifbool{cbx:parens}
-       {\bibcloseparen}
-       {}}
-    {\ifbool{cbx:parens}
-       {\setunit{\postnotedelim}}
-       {\setunit{\extpostnotedelim\bibopenparen}}%
-     \printfield{postnote}\bibcloseparen}}
+\sys_if_engine_pdftex:TF
+ {
+  \cs_set_eq:Nc \capitalize_tl_set:Nn { protected@edef }
+ }
+ {
+  \cs_set_eq:NN \capitalize_tl_set:Nn \tl_set:Nn
+ }
 
-\DeclareCiteCommand{\cite}
-  {\usebibmacro{prenote}}%
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+\cs_new_protected:Nn \capitalize_word:n
+ {
+  \capitalize_tl_set:Nn \l_capitalize_word_tl { #1 }
+  \seq_if_in:NfTF \g_capitalize_exceptions_seq { \tl_to_str:n { #1 } }
+   % exception word
+   { \seq_put_right:Nn \l_capitalize_words_seq { #1 } } % exception word
+   % to be uppercased
+   { \seq_put_right:Nx \l_capitalize_words_seq { \tl_mixed_case:V \l_capitalize_word_tl } }
+ }
+\cs_generate_variant:Nn \tl_mixed_case:n { V }
+\NewDocumentCommand{\DoNotCapitalise}{m}
+ {
+  \clist_map_inline:nn { #1 }
+   {
+    \seq_gput_right:Nx \g_capitalize_exceptions_seq { \tl_to_str:n { ##1 } }
+   }
+ }
+\cs_generate_variant:Nn \seq_if_in:NnTF { Nf }
+\seq_new:N \l_capitalize_words_seq
+\seq_new:N \g_capitalize_exceptions_seq
+\ExplSyntaxOff
 
-\DeclareCiteCommand*{\cite}
-  {\usebibmacro{prenote}}%
-  {\usebibmacro{citeindex}%
-   \usebibmacro{citeyear}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+\DoNotCapitalise{a,is,of,the}
 
-\DeclareCiteCommand{\parencite}[\mkbibparens]
-  {\usebibmacro{prenote}}%
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareCiteCommand*{\parencite}[\mkbibparens]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{citeyear}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareCiteCommand{\footcite}[\mkbibfootnote]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareCiteCommand{\footcitetext}[\mkbibfootnotetext]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-\DeclareCiteCommand{\textcite}
-  {\boolfalse{cbx:parens}}
-  {\usebibmacro{citeindex}%
-   \iffirstcitekey
-     {\setcounter{textcitetotal}{1}}
-     {\stepcounter{textcitetotal}%
-      \textcitedelim}%
-   \usebibmacro{textcite}}
-  {\ifbool{cbx:parens}
-     {\bibcloseparen\global\boolfalse{cbx:parens}}
-     {}}
-  {\usebibmacro{textcite:postnote}}
-
-\DeclareMultiCiteCommand{\textcites}{\textcite}{}
-
-\usepackage{xpatch}
-\xpatchbibmacro{name:delim}
-  {\lbx@finalnamedelim{#1}}
-  {\printdelim{finalnamedelim}}
-  {}{}
-
-% Set the global context to use an ampersand
-\DeclareDelimFormat{finalnamedelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace\&\space}
-
-% Set the textcite context specifically to use the "and" string
-\DeclareDelimFormat[textcite]{finalnamedelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
-  \addspace\bibstring{and}\space}
-
-\DeclareNameAlias{sortname}{family-given}
-\DeclareNameAlias{default}{family-given}
-\renewrobustcmd*{\bibnamedelimi}{\bibnamedelima}
+\DeclareFieldFormat*{citetitle}{%
+  \iffieldundef{maintitle}{%
+    \iffieldundef{booktitle}{%
+      \emph{\TitleCase{#1}}%
+    }{%
+      \mkbibquote{\TitleCase{#1}}%
+    }%
+  }{%
+    \mkbibquote{\TitleCase{#1}}%
+  }%
+}
 
 
-\endinput
+\DeclareEntryOption[boolean]{classic}[true]{%
+  \BibliographyWarning{classic: \thefield{shorthand} \thefield{entrykey}}
+  \show\cbx@classictextcite
+  \iffieldundef{shorthand}{%
+    \BibliographyWarning{defining classic macro}%
+    \def\cbx@classictextcite{%
+      \usebibmacro{labelname:normal}\addspace%
+      \printfield{title}\addunit%
+      % \usebibmacro{textcite:postnote}
+      \BibliographyWarning{using classic macro}
+    }%
+    \show\cbx@classictextcite
+  }%
+}
+
+
+
+\endinput%
