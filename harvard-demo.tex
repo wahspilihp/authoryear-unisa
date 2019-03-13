@@ -1,6 +1,7 @@
 \documentclass[a4paper,australian,oneside,12pt,footlines=3]{scrbook}%pagenumber=bottomcenter,
 \usepackage{babel}
-\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear-unisa,terseinits=true,backend=biber]{biblatex}
+\usepackage[style=authoryear-unisa,citecounter,citetracker,datamodel=corp,terseinits=true,backend=biber]{biblatex}
+% \usepackage[style=authoryear-unisa,terseinits=true,backend=biber,datamodel=corp,citecounter,citetracker,maxcitenames=3]{biblatex}
 %\usepackage[citestyle=authoryear-unisa,bibstyle=debug,terseinits=true]{biblatex}
 %\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear,terseinits=true,giveninits=true]{biblatex
 \addbibresource{bibliography.bib}
@@ -10,6 +11,8 @@
 \renewrobustcmd*{\bibsetup}{\singlespacing}
 
 \newcommand{\todo}[1]{\marginpar{\singlespacing\textbf{TO DO:} {#1}}}
+\show\todo
+\xshowcmd{\todo}
 \newcommand{\biblatex}{\texttt{biblatex}}
 \newcommand{\example}[1]{\textsf{#1}}
 \newcommand{\instruction}[1]{\textbf{#1}}
@@ -25,7 +28,7 @@
 	basicstyle=\ttfamily
 }
 
-%\usepackage{setspace}
+\usepackage{setspace}
 %\singlespacing
 %\onehalfspacing
 %\doublespacing
@@ -61,7 +64,7 @@
 \begin{document}
 %\publishers{University of South Australia\\
 %Division of Information Technology, Engineering and the Environment}
-\subject{ENGG 1003 Sustainable Engineering Practice}
+\subject{Generic}
 \title{The authoryear-unisa \biblatex{} Style}
 \subtitle{Demonstration and Test Cases}
 \author{Philip Shaw}
@@ -72,7 +75,7 @@
 This bibliography style has been developed solely to meet the demands of the UniSA-Harvard referencing system as laid out in the January 2017 edition of the \emph{Harvard Referencing Guide UniSA}. It is not intended to be configurable, and as \LaTeX{} code it is pretty hacky, but aside from the caveats noted in marginal comments it appears to meet the reference requirements for those formats which are implemented.
 
 Citations are not yet working correctly.
-
+\show\todo
 \todo{Support automatic citation of page numbers where only one page is in the source.}
 
 This document is both an example of the use of the reference style (allowing comparison to the official specification), and a set of test cases for semi-manual regression testing.
@@ -232,11 +235,11 @@ The \textcite{AFR2012} examines\textelp{}\\
 \example{According to the Australian Bureau of Statistics (ABS) (2010), the national\textelp{}\\\textelp{}concerning figures (ABS 2010).\\Australian Bureau of Statistics (ABS) 2010, Measures of Australia’s progress 2010, cat. no. 1370.0, ABS, Canberra.}
 
 \paragraph{Government report}
-\instruction{If you cite the authoring body frequently in-text, introduce the organisation name in abbreviated form in brackets after the first citation. Use this abbreviation for subsequent citations, e.g. (HREOC 2012).}
+\instruction{If you cite the authoring body frequently in-text, introduce the organisation name in abbreviated form in brackets after the first citation. Use this abbreviation for subsequent citations, e.g. (HREOC 2012).} 
 Also use this abbreviation when the name appears elsewhere.
 
 \textelp{}valuable future strategies \parencite[39]{Bradley2008}\\
-\textcite[18]{HREOC1997} recommended\textelp{}\nocite{HREOC1998}
+\textcite[18]{HREOC1997} recommended\textelp{}\\\\but to test the rules, we must also cite \parencite{HREOC1998}
 \example{The Human Rights and Equal Opportunity Commission (HREOC) (1997, p. 18) recommended\textelp{}\\Human Rights and Equal Opportunity Commission (HREOC) 1997,
 Bringing them home: report of the national inquiry into the separation of Aboriginal and Torres Strait Islander children from their families, HREOC, Canberra.}
 \todo{support short names properly}
