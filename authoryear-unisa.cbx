@@ -329,6 +329,17 @@
 % \xpretocmd{\fullcite}{\begingroup\ExecuteBibliographyOptions{maxcitenames=}}%
 %
 
+\renewbibmacro*{cite}{%
+  \iffieldundef{shorthand}%
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}%
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}%
+       {\ifnameundef{author}{\usebibmacro{editorstrg} }{}%
+        \printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \usebibmacro{cite:labeldate+extradate}}%
+    {\usebibmacro{cite:shorthand}}}
+
 \renewbibmacro*{textcite}{%
   \ifnameundef{labelname}
     {\iffieldundef{shorthand}{%
@@ -376,22 +387,21 @@
      }
 
 \renewbibmacro*{editorstrg}{%from biblatex.def
-  \BibliographyWarning{in editorstrg}
   \printtext[editortype]{%
-    \iffieldundef{editortype}
-      {\ifboolexpr{
-         test {\ifnumgreater{\value{editor}}{1}}
-         or
-         test {\ifandothers{editor}}
-       }
+    \iffieldundef{editortype}%
+      {\ifboolexpr{%
+         test {\ifnumgreater{\value{editor}}{1}}%
+         or%
+         test {\ifandothers{editor}}%
+       }%
          {eds}%changed
          {\bibstring{editor}}}%changed
-      {\ifbibxstring{\thefield{editortype}}
-         {\ifboolexpr{
-            test {\ifnumgreater{\value{editor}}{1}}
-            or
-            test {\ifandothers{editor}}
-          }
+      {\ifbibxstring{\thefield{editortype}}%
+         {\ifboolexpr{%
+            test {\ifnumgreater{\value{editor}}{1}}%
+            or%
+            test {\ifandothers{editor}}%
+          }%
             {\bibstring{\thefield{editortype}s}}%changed
             {\bibstring{\thefield{editortype}}}}%changed
          {\thefield{editortype}}}}}
