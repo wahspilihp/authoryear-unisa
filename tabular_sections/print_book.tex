@@ -1,0 +1,80 @@
+\subsection{Book}
+\tbhead{}
+	\mtr[3]{Book with 1 author (this can include a person or an authoring body, e.g. a sponsoring organisation)} 
+		& Chabon (2008, p. 108) discusses...&
+			\textcite[108]{Chabon2008} discusses...&
+			Chabon, M 2008, \textit{Maps and legends}, McSweeney’s Books, San Francisco.&\fullcite{Chabon2008}
+			\tabularnewline
+		&...was discussed in the study (Chabon 2008, p. 108).&...was discussed in the study \parencite[108]{Chabon2008}.\tabularnewline
+			&...a better world (Deni Green Consulting Services 2008, p. 5).&...a better world \parencite[5]{DGCS2008}
+		&Deni Green Consulting Services 2008, \textit{Capital idea: realising value from environmental and social performance}, Deni Green Consulting Services, North Carlton, Victoria.&\fullcite{DGCS2008}
+	\tabularnewline
+	\midrule
+	\multirow[t]{2}{=}{Book with 2 or 3 authors} & 
+		Campbell, Fox and de Zwart (2010, p. 46) argue...&
+			\textcite[46]{Campbell2010} argue...&
+			\mtr{Campbell, E, Fox, R \& de Zwart, M 2010, \textit{Students’ guide to legal writing, law exams and self assessment}, 3rd edn, Federation Press, Sydney.}&
+			\mtr{\fullcite{Campbell2010}}&
+			\mtri{When multiple authors' names are included within your sentence (not in brackets) use the full spelling of `and'. When the authors' names are in brackets or in the reference list, use `\&'.}
+			\tabularnewline
+		& ...alternatives are preferable (Campbell, Fox \& de Zwart 2010, p. 46).
+			&...alternatives are preferable\parencite[46]{Campbell2010}
+			\tabularnewline
+	\midrule
+	\mtr{Book with 4 or more authors}&
+		As suggested by Henkin et al. (2006, p. 14)...&
+			As  suggested by \textcite[14]{Henkin2006}...&
+			\mtr{Henkin, RE, Bova, D, Dillehay, GL, Halama, JR, Karesh, SM, Wagner, RH \& Zimmer, MZ 2006, \textit{Nuclear medicine}, 2nd edn, Mosby Elsevier, Philadelphia.}&
+			\mtr{\fullcite{Henkin2006}}&
+			\mtri{When there are 4 or more authors, only use the first author’s name in-text followed by the abbreviation et al. But include all names in the reference list.}
+			\tabularnewline
+		&...has been suggested (Henkin et al. 2006, p. 14).&
+			...has been suggested \parencite[14]{Henkin2006}.
+			\tabularnewline
+	\midrule
+	\mtr{Book with no date or an approximate date}&
+		This is emphasized by Seah (n.d.) when...&
+			This is emphasized by \textcite{Seah} when...&
+			Seah, R n.d., \textit{Micro-computer applications}, Microsoft Press, Redmond, Washington.&
+			\fullcite{Seah}&
+			\mtri{If there is no date use n.d. If there is an approximate date use c. (this means `circa' – Latin for `around/about').}
+			\tabularnewline
+		&This is emphasised by Seah (c. 2005) when...&
+			This is emphasised by \textcite{Seahcirca2005} when...&
+			Seah, R c. 2005, \textit{Micro-computer applications}, Microsoft Press, Redmond, Washington.&
+			\fullcite{Seahcirca2005}
+			\tabularnewline
+	\midrule
+	\mtr{2nd, revised or later edition of a book}&
+		Bordwell and Thompson (2009, p. 33) explain...&
+			\textcite[33]{Bordwell2009} explain...&
+			Bordwell, D \& Thompson, K 2009, \textit{Film art: an introduction}, 9th edn, Mc-Graw Hill, New York.&
+			\fullcite{Bordwell2009}&
+			\mtri{The edition number comes directly after the title in the reference list. Include details of the date and edition which you accessed. Edition is not mentioned in-text.}
+			\tabularnewline
+		&...influenced his work (Pearce 2015).&
+			...influenced his work \parencite{Pearce2015}.&
+			Pearce, B 2015, Master of stillness: \textit{Jeffrey Smart}, rev. edn, Wakefield Press, Mile End, South Australia.&
+			\fullcite{Pearce2015}
+			\tabularnewline
+	\midrule
+	\mtr{Translated book}&
+		Kristeva (1995) has achieved great currency since its translation.&
+			\textcite{Kristeva1995} has achieved great currency since its translation.&
+			\mtr{Kristeva, J 1995, \textit{New maladies of the soul}, trans. R Guberman, Columbia University Press, New York.}&
+			\mtr{\fullcite{Kristeva1995}}&
+			\mtri{The translator's name is not referenced in-text –-- it only appears after the title in the reference list.}
+			\tabularnewline
+		&...is argued as the reason for this tension (Kristeva 1995).&
+			...is argued as the reason for this tension \parencite{Kristeva1995}.
+			\tabularnewline
+\badrow{4}
+	Translated Classic&
+		Plato expressed this... (Plato \textit{The republic}, lines 56-60)&
+			\citeauthor{Plato1967} expressed this \parencite[56-60]{Plato1967} &
+			Plato, The republic, trans. A Bloom, Basic Books, New York, 1967.&
+				\fullcite{Plato1967}&
+				\todow{this doesn't work, includes translation year as book year}
+				\tabularnewline
+\bottomrule
+\end{longtabu}

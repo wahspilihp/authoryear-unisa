@@ -1,0 +1,258 @@
+\documentclass[a4paper,australian,oneside,10pt,footlines=3]{scrbook}%pagenumber=bottomcenter,
+\usepackage{babel}
+% \usepackage[style=authoryear-unisa,citecounter,citetracker,datamodel=corp,terseinits=true,backend=biber]{biblatex}
+\usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
+% \usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker]{biblatex}
+% \usepackage[citestyle=authoryear-unisa,bibstyle=debug,citecounter,citetracker,datamodel=corp,terseinits=true]{biblatex}
+%\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear,terseinits=true,giveninits=true]{biblatex
+% \usepackage[style=ieee]{biblatex}
+\addbibresource{bibliography.bib}
+%\addbibresource{biblatex-examples.bib}
+%\renewrobustcmd*{\bibinitperiod}{Hello}
+% \renewrobustcmd*{\bibinitdelim}{}
+% \renewrobustcmd*{\bibsetup}{\singlespacing}
+\usepackage{xpatch}
+\xapptocmd{\bibsetup}{\singlespacing}{}{}
+
+\usepackage[table]{xcolor}
+% \newcommand{\color}[1]{\typeout{#1}}
+\newcommand{\mismatch}[1]{\textbf{#1}}
+\newcommand{\todo}[1]{\marginpar{\singlespacing\textbf{TO DO:} {#1}}}
+\newcommand{\todow}[1]{{\normalfont\color{red}\textsc{#1}}}
+\newcommand{\nb}[1]{{\normalfont #1}}
+\newcommand{\biblatex}{\texttt{biblatex}}
+\newcommand{\example}[1]{\textsf{#1}}
+\newcommand{\instruction}[1]{\textsf{\emph{#1}}}
+\newcommand{\ls}{\newline\newline}
+% \newcommand{\nfullcite}{\begingroup\let\par\relax\fullcite\endgroup}
+\usepackage{tabu}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{etoolbox}
+\usepackage{booktabs}
+% \usepackage{mwe}
+\usepackage{listings}
+\usepackage{pdflscape}
+\lstset{%
+	basicstyle=\ttfamily%
+}
+
+\usepackage{setspace}
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.1}
+
+\usepackage[autooneside=false]{scrlayer-scrpage}
+\automark[chapter]{chapter}
+\automark*[section]{}
+%\ohead{\headmark}
+%\chead{\headmark}
+%\ihead{\headmark}
+%\ehead{\headmark}
+\cfoot*{\pagemark}
+\ofoot*{Philip Shaw}
+
+
+\usepackage{amsthm}
+\theoremstyle{remark}
+\newtheorem*{note}{Note}
+
+\usepackage[thresholdtype=words]{csquotes}
+% Move the final punctuation for blockquotes to the end, as per UniSA style guide
+\renewcommand{\mkcitation}[1]{ #1}
+\renewcommand{\mktextquote}[6]{#1#2#3#6#4#5}
+%shrink the text in blockquotes
+\usepackage{relsize,etoolbox}
+\AtBeginEnvironment{quote}{\smaller}
+\SetBlockThreshold{30} %number specified by UniSA requirements
+%\SetCiteCommand{\parencite}
+
+%\providecommand{\frontmatter}{\pagenumbering{roman}\setcounter{page}{1}}
+%\providecommand{\mainmatter}{\pagenumbering{arabic}\setcounter{page}{1}}
+
+\usepackage{stringstrings}
+
+
+%DEMONSTRATION COMMANDS - NOT FOR USE IN UniSA REPORTS
+\makeatletter
+\DeclareCiteCommand{\fullcite}
+  {\defcounter{maxnames}{\blx@maxbibnames}%
+    \usebibmacro{prenote}}%
+  {\usedriver%
+     {\DeclareNameAlias{sortname}{default}}%
+     {\thefield{entrytype}}}%
+  {\multicitedelim}%
+  {\usebibmacro{postnote}}%
+
+
+ \errorcontextlines=3
+  \AtUsedriver{%
+  \let\finentry\blx@finentry@usedrv
+\let\newblock\relax
+\let\abx@macro@bibindex\@empty
+\let\abx@macro@pageref\@empty}
+% \show\fullcite
+% \show\blxcitecmd
+% \show\blx@citei@fullcite
+% \show\blxciteicmd
+
+% \show\blx@printbibliography
+
+\makeatother
+
+
+
+
+\begin{document}
+%\publishers{University of South Australia\\
+%Division of Information Technology, Engineering and the Environment}
+% \subject{Generic}
+\title{The authoryear-unisa \biblatex{} Style}
+\subtitle{Demonstration and Test Cases}
+\author{Philip Shaw}
+
+	\maketitle
+\frontmatter
+\addchap{Introduction}
+This bibliography style has been developed solely to meet the demands of the UniSA-Harvard referencing system as laid out in the January 2017 edition of the \emph{Harvard Referencing Guide UniSA} \parencite{UniSA-HRG}. It is not intended to be configurable, and as \LaTeX{} code it is pretty hacky, but aside from the caveats noted in marginal comments it appears to meet the reference requirements for those formats which are implemented.
+
+Citations are not yet working correctly.
+\todo{Support automatic citation of page numbers where only one page is in the source.}
+
+This document is both an example of the use of the reference style (allowing comparison to the official specification), and a set of test cases for manual regression testing.
+
+
+
+
+
+\chapter*{Disclaimer}
+The \biblatex{} BBX code is principally my own work, although it draws from the examples given in the \biblatex{} documentation and elsewhere. The sample text is drawn almost verbatim from \citetitle{UniSA-HRG}. The CBX code is as-yet largely from \biblatex.
+
+\tableofcontents
+
+\mainmatter
+% \chapter{Usage}
+% To produce your bibliography, you need to run latex, then biber, then latex, just like when using bibtex.
+% For example:
+% \begin{lstlisting}[language=bash]
+% 	xelatex your_file
+% 	biber your_file
+% 	xelatex your_file
+% \end{lstlisting}
+
+% It requires e-\TeX, that is, almost any modern \TeX{} engine. 
+% It has been tested in Xe\LaTeX{} and PDF\LaTeX. 
+% It also requires an MD5 command, and if it isn't called \verb|\mdfivesum| or \verb|\pdfmdfivesum| you'll need to add \verb|\let\mdfivesum\yourmdfivesum| to your preamble.
+% % % %--------------------------------------------------------------------------
+% % % %
+% % % %
+
+
+\input{essay_example}
+
+% % % %---------------------------------------------------------------------------
+
+\begingroup
+\pagestyle{empty}
+\KOMAoptions{DIV=50}
+\extrarowsep =\baselineskip
+\begin{landscape}
+\chapter{HRG Example Cases}
+% % \section{Book}
+\newcommand{\mtr}[2][2]{\multirow[t]{#1}{=}{#2}}
+\newcommand{\mtri}[2][2]{\mtr[#1]{\instruction{#2}}}
+\newcommand{\tbdisp}[2]{\multicolumn{6}{l}{\usekomafont{disposition}\usekomafont{#1}{#2}}\tabularnewline}
+\newcommand{\tbsec}[1]{\tbdisp{section}{#1}}
+\newcommand{\tbssec}[1]{\tbdisp{subsection}{#1}}
+\newcommand{\tbsssec}[1]{\tbdisp{subsubsection}{#1}}
+\newcommand{\tbhead}{%
+	\begin{longtabu}{>{\usekomafont{disposition}}X[1L]>{\sffamily}X[2L]X[2L]>{\sffamily}X[3L]X[3L]>{\small}X[2L]}%
+		\toprule%
+		\mtr{Type of reference} &%
+		\multicolumn{2}{l}{\usekomafont{disposition}In-text reference} & %
+		\multicolumn{2}{l}{\usekomafont{disposition}Reference list} & %
+		\mtr{\usekomafont{disposition}Further Information}%
+	\\[-.75cm]%
+		& \usekomafont{disposition}Example & %
+		\usekomafont{disposition}Test & %
+		\usekomafont{disposition}Example & %
+		\usekomafont{disposition}Test%
+	\tabularnewline%
+	\midrule%
+	\endhead%
+}
+\def\tbend{\bottomrule\end{longtabu}}
+\newcommand{\badrow}[1]{\rowfont\bfseries\href{https://github.com/wahspilihp/authoryear-unisa/issues/#1}{}}
+% \rowfont{\usekomafont{disposition}}
+\section{Print}
+% \input{tabular_sections/print_book}
+\input{tabular_sections/print_edited_book}
+% \input{tabular_sections/print_articles}
+% \input{tabular_sections/print_government}
+% \pagebreak[3]
+% \input{tabular_sections/print_legal}
+% \input{tabular_sections/print_patent_standard}
+% \input{tabular_sections/print_reference}
+% \input{tabular_sections/print_inproceedings}
+% \input{tabular_sections/print_misc}
+% \section{Online (electronic)}
+% \input{tabular_sections/online_web}
+% \input{tabular_sections/online_doc}
+% \input{tabular_sections/online_book}
+% \input{tabular_sections/online_article}
+% \input{tabular_sections/online_reference}
+% \input{tabular_sections/online_UniSA}
+% \input{tabular_sections/online_news}
+% \input{tabular_sections/online_streaming}
+% \input{tabular_sections/online_misc}
+% \input{tabular_sections/sound_visual}
+% \input{tabular_sections/other}
+\end{landscape}
+\endgroup
+
+% % \begin{figure}[tbp]
+% % \begin{center}
+% % \includegraphics[width=.48\textwidth]{example-image}
+% % \end{center}
+% % \caption{Image/diagram/artwork from a print source, \citetitle{HussinImage} \parencite{HussinImage}.}
+% % \end{figure}
+% % \printbibliography[heading=subbibliography]
+% % \end{refsection}
+
+% % \chapter{Examples provided with TeXLive's Bib\TeX{}}
+% % \section{The main \biblatex{} example}
+% % %\begin{refsection}[/opt/local/share/texmf-texlive/doc/latex/biblatex/examples/biblatex-examples.bib]
+% % \begin{refsection}[biblatex-examples.bib]
+% % 	\nocite{*}
+% % 	\printbibliography[heading=subbibliography]
+% % \end{refsection}
+% % %\section{The \biblatex{} Frankenstein example}
+% % %\begin{refsection}[/opt/local/share/texmf-texlive/doc/latex/biblatex/examples/biblatex-examples.bib]
+% % % \begin{refsection}[frankenstein.bib]
+% % % 	There is an unmatched brace in the last line of the annotation in \texttt{beckett:dream} in my distribution, and \texttt{o'brien:beckettcountry:alt} can't have an apostrophe in the key for \biblatex. If you get a lot of warnings about undefined citations, try correcting these.
+% % % 	\nocite{*}
+% % % 	\printbibliography[heading=subbibliography]
+% % % \end{refsection}
+% % % \section{Works on typography and typesetting}
+% % % \begin{refsection}[typeset.bib]
+% % % 	\nocite{*}
+% % % 	%this uses a variety of old commands, some of which shouldn't be in a bibliography file.
+% % % 	\let\tt\ttfamily
+% % % 	\printbibliography[heading=subbibliography]
+% % % \end{refsection}
+% % % \section{The \TeX{}Book bibliography}
+% % % \begin{refsection}[texbook3.bib]
+% % % 	\nocite{*}
+% % % 	\printbibliography[heading=subbibliography]
+% % % \end{refsection}
+% % %\nocite{*}
+% % %\parencite{*}
+Lets test this again \parencite{HREOC1997}. We're trying to discuss \textcite{HREOC1997}, or even \textcite{HREOC1998}.
+We're also writing about \textcite{UniSA-HRG}, and again as the HRG \parencite{UniSAHorizon2020}
+\textcite{Plato1967}
+\printbibliography[heading=bibintoc,nottype=artwork]
+\end{document}
