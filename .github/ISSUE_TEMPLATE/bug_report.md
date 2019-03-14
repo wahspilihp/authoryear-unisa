@@ -16,7 +16,10 @@ What you see.
 **Bib Entry**
 The erroneous bib file entry
 ```BibTeX
-
+@book{placeholder,
+author={Author, Anne},
+title={Placeholder}.
+}
 ```
 
 **Environment, if known**
