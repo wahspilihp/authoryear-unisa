@@ -2,7 +2,8 @@
 [\abx@cbxid]%
 %
 \def\cbx@classictextcite\relax
-\ExecuteBibliographyOptions{labeldateparts,uniquename,uniquelist,autocite=inline,useprefix=true}%
+% \ExecuteBibliographyOptions{labeldateparts,uniquename=init/full,uniquelist,autocite=inline,useprefix=true,defernumbers=true}%
+\ExecuteBibliographyOptions{labeldateparts,uniquename=corp,uniquelist,autocite=inline,useprefix=true,defernumbers=true}%
 \ExecuteBibliographyOptions{citecounter,citetracker,maxcitenames=3}%
 \renewcommand*{\iffinalcitedelim}{\iflastcitekey}%
 %
@@ -71,8 +72,9 @@
 }
 
 \DeclareUniquenameTemplate[corp]{
-  \namepart{short}
-  \namepart{long}
+  % \BibliographyWarning{Using corp uniquenametemplate}
+  \namepart[base=true]{short}
+  \namepart[disambiguation=full]{long}
 }
 
 \DeclareNameFormat{labelname}{\thefield{uniquepart}}
@@ -97,9 +99,16 @@
 % requires use of \cbx@nametracker{\thefield{hash}}%
 % in the appropriate place%
 \newrobustcmd*{\cbx@nametracker@global}[1]{%%
+  % \forlistcsloop{\show}{#1}%
+  % \csshow{cbx@bseen@names@\the\c@refsection}%
   \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}%
-    {}%
-    {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}%
+    {%
+      % \BibliographyWarning{#1 seen in \the\c@refsection}%
+    }{%
+      %\BibliographyWarning{#1 not seen in \the\c@refsection}%
+      \listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}
+    }%
+  }%
 %
 \newrobustcmd*{\cbx@nametracker@context}[1]{%%
   \iftoggle{blx@footnote}%
@@ -111,6 +120,7 @@
        {\listcsxadd{cbx@bseen@names@\the\c@refsection}{#1}}}}%
 %
 \newrobustcmd*{\cbx@ifnameseen@global}[1]{%%
+  % \BibliographyWarning{looking for #1}%
   \xifinlistcs{#1}{cbx@bseen@names@\the\c@refsection}}%
 %
 \newrobustcmd*{\cbx@ifnameseen@context}[1]{%%
@@ -149,7 +159,7 @@
   \global\cslet{cbx@bseen@names@\the\c@refsection}\@empty%
   \global\cslet{cbx@fseen@names@\the\c@refsection}\@empty}%
 %
-\ExecuteBibliographyOptions{nametracker=context}%
+\ExecuteBibliographyOptions{nametracker=global}%
 %
 %%% namecounter%
 % defines \namecounter{<hash>}%
@@ -260,8 +270,10 @@
   \usebibmacro{name:andothers}}%
 %
 \DeclareNameAlias{sortname}{family-given}%
+% 
 %
 \DeclareNameFormat{labelname}{%%
+  %\BibliographyWarning{using labelname for \thefield{entrykey}}%
   \ifuniquenametemplatename{corp}%
     {\usebibmacro{labelname:corp}}%
     {\usebibmacro{labelname:normal}}%%
@@ -269,21 +281,34 @@
   \cbx@nametracker{\thefield{hash}}%%
   \cbx@countname{\thefield{hash}}}%
 %
-\newbibmacro{labelname:corp}{%%
-  \ifboolexpr{    test {\iffieldequalstr{uniquepart}{short}}%
-              and test {\ifnumgreater{\cbx@namecount{\thefield{hash}}}{1}}}%
-    {\cbx@ifnameseen{\thefield{hash}}%
-       {\usebibmacro{name:corp}%
-          {\empty}%
-          {\namepartshort}}%
-       {\usebibmacro{name:corp:both}%
-          {\namepartlong}%
-          {\namepartshort}}} %
-    {\usebibmacro{name:corp}%
-       {\namepartlong}%
-       {\empty}}}%
+% \newbibmacro{labelname:corp}{%%
+%   \BibliographyWarning{using labelname:corp for \thefield{entrykey}}%
+%   \ifboolexpr{    test {\iffieldequalstr{uniquepart}{short}}%
+%               and test {\ifnumgreater{\cbx@namecount{\thefield{hash}}}{1}}}%
+%     {\BibliographyWarning{uniquepart is short}\cbx@ifnameseen{\thefield{hash}}%
+%        {\BibliographyWarning{name seen}\usebibmacro{name:corp}%
+%           {\empty}%
+%           {\namepartshort}}%
+%        {\BibliographyWarning{name unseen}\usebibmacro{name:corp:both}%
+%           {\namepartlong}%
+%           {\namepartshort}}} %
+%     {\BibliographyWarning{uniquepart is not short}\usebibmacro{name:corp}%
+%        {\namepartlong}%
+%        {\empty}}}%
+
+\newbibmacro{labelname:corp}{%
+  % \ifnumgreater{\cbx@namecount{\thefield{hash}}}{1}
+  \cbx@ifnameseen{\thefield{hash}}{%
+    \namepartshort%
+  }{%
+    \namepartlong\addspace(\namepartshort)%
+  }%
+}
+%
+\DeclareNameAlias{labelnames}{labelname}%
 %
 \newbibmacro{labelname:normal}{%%
+  %\BibliographyWarning{using labelname:normal for \thefield{entrykey}}%
   \ifcase\value{uniquename}%%
     \usebibmacro{name:family}%
       {\namepartfamily}%
@@ -343,7 +368,7 @@
 \renewbibmacro*{textcite}{%
   \ifnameundef{labelname}
     {\iffieldundef{shorthand}{%
-      \show\cbx@classictextcite%
+      % \show\cbx@classictextcite%
       \ifdefvoid{\cbx@classictextcite}{%
        \usebibmacro{cite:label}%
         \setunit{%
@@ -352,10 +377,10 @@
         \ifnumequal{\value{citecount}}{1}
           {\usebibmacro{prenote}}
           {}%
-        \bibstring{editor}
+        % \bibstring{editor}
         \ifnameundef{author}{%
           \typeout{no author}
-          \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
+          % \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
           \iffieldundef{editortype}{%
             \bibstring{editor}
           }{%
@@ -380,7 +405,9 @@
           \typeout{no author}
           \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
           \usebibmacro{editorstrg}
-        }{\BibliographyWarning{has author}}%
+        }{%
+          %\BibliographyWarning{has author}
+        }%
         \printfield{labelyear}%
      % }%
      }%
@@ -469,7 +496,7 @@
   \BibliographyWarning{classic: \thefield{shorthand} \thefield{entrykey}}
   \show\cbx@classictextcite
   \iffieldundef{shorthand}{%
-    \BibliographyWarning{defining classic macro}%
+    % \BibliographyWarning{defining classic macro}%
     \def\cbx@classictextcite{%
       \usebibmacro{labelname:normal}\addspace%
       \printfield{title}\addunit%
