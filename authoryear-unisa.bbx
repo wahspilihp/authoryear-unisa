@@ -6,12 +6,18 @@
 %
 \usepackage{iftex}%
 %
-\ifPDFTeX%
-\let\mdfivesum\pdfmdfivesum%
-\else%
-\relax%
-\fi%
+% \ifPDFTeX%
+% \let\mdfivesum\pdfmdfivesum%
+% \else%
+% \relax%
+% \fi%
 %
+\RequirePackage[english=british,thresholdtype=words,threshold=30]{csquotes}
+\DeclareQuoteStyle{unisa}
+	{\textquoteleft}{\textquoteright}
+	{\textquotedblleft}{\textquotedblright}
+\ExecuteQuoteOptions{style=unisa}
+\SetCiteCommand{\parencite}
 
 %%%%% For debugging
 \newcommand{\dbtypeout}[1][]{\dbtypeoutinner{\thefield{entrykey} \thefield{title}: #1}}
@@ -30,12 +36,12 @@
 \newbibmacro*{finentry}{}%
 \renewrobustcmd*{\bibinitperiod}{}%
 \setlength{\bibhang}{0pt}%
-\DefineBibliographyStrings{australian}{%
-	lines={lines},%
-	line={line},%
-	circa={c.},%
-	bibliography={References}%
-}%
+% \DefineBibliographyStrings{australian}{%
+% 	lines={lines},%
+% 	line={line},%
+% 	circa={c.},%
+% 	bibliography={References}%
+% }%
 \renewcommand{\newunitpunct}{, }%
 %
 %\def\bysame{\leavevmode\hbox to3em{\hrulefill}\thinspace} % from ams document classes%
@@ -120,16 +126,16 @@
 	%\makeatletter%
 	\edef\longname{#2}%
 	%\show\longname%
-	\ayumkshortlongc[#1]{\longname}{\mdfivesum{\longname}}%
+	\ayumkshortlongc[#1]{\longname}{\thefield{hash}}%
 	%\typeout{returned to ayumkshortlong}%
 	%\expandafter\show\csname ayusl\mdfivesum{\longname}\endcsname%
 }%
 \newcommand{\ayushortlong}[1]{%
-	\ifcsvoid{\ayuprefix\mdfivesum{#1}}{%
+	\ifcsvoid{\ayuprefix\thefield{hash}}{%
 		#1%
 		%\message{no short name (\ayuprefix\mdfivesum{#1}) for #1}%
 	}{%
-		\csname \ayuprefix\mdfivesum{#1}\endcsname%
+		\csname \ayuprefix\thefield{hash}\endcsname%
 		%\message{found short name (ayusl\mdfivesum{#1}) for #1}%
 		%\expandafter\show\csname ayusl\mdfivesum{#1}\endcsname%
 	}%
@@ -347,7 +353,7 @@
 \DeclareFieldFormat{pages}{\mkcomprange[\mkpageprefix]{#1}}%
 %
 %from biblatex.def%
-\newbibmacro*{eprint}{%
+\renewbibmacro*{eprint}{%
   \iffieldundef{eprinttype}%
     {\printfield{eprint}}%
     {\printfield[eprint:\strfield{eprinttype}]{eprint}}}%
@@ -440,11 +446,19 @@
 %
 \DeclareBibliographyAlias{incollection}{inbook}%
 %
+\newcommand{\absPlain}{\name{author}{1}{}{%
+        {{uniquename=0,uniquepart=base,hash=ef114ba452779edde2caef950f480766}{%
+           family={{Australian Bureau of Statistics}},
+           familyi={A\bibinitperiod}}}%
+      }}
+
 \DeclareBibliographyDriver{report}{%
+	% \ifname
 	\ifnameundef{author}{\ifnameundef{editor}{\printlist{institution}}{}}{}%
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%%
 	\printfield{title}\newunit%
+	\printfield{titleaddon}\newunit%
 	\ifnameundef{author}{%
 		\ifnameundef{editor}{%
 			\iffieldundef{usera}{%
@@ -487,6 +501,7 @@
 \DeclareBibliographyDriver{reference}{%
 	\ifnameundef{editor}{%
 		\ifnameundef{author}{%
+			\skipentry%	
 			%do nothing in the refernces for works with no author or editor%
 		}{%
 			\usebibmacro{author-or-dash}\addspace%
@@ -531,6 +546,7 @@
 	\printfield{type}\newunit%
 	\printfield{maintitle}\newunit%
 	\iflistundef{organization}{\printlist{publisher}}{\printlist{organization}}\newunit%
+	\printlist{location}\newunit%
 	\iffieldundef{type}{}{\usebibmacro{day-month}\newunit}%
 	\usebibmacro{url-date}.%
 }%
@@ -578,12 +594,19 @@
 %
 \DeclareBibliographyDriver{letter}{\message{Warning: correspondence is not to be cited in UniSA-Harvard bibliographies.}}%
 %
+\newbibmacro{softwaretype}{%
+	\iffieldundef{type}{%
+		\printtext[type]{computer program}%
+	}{%
+		\printfield{type}%
+	}%
+}
 \DeclareBibliographyDriver{software}{%
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
 	\printfield{title}\newunit%
 	\printfield{version}\newunit%
-	\printfield{type}\newunit%
+	\usebibmacro{softwaretype}\newunit%
 	\printlist{publisher}\newunit%
 	\printlist{location}\newunit%
 	\usebibmacro{url-date}\newunit%
@@ -622,6 +645,7 @@
 	\iffieldundef{url}{}{\usebibmacro{url-date}}\newunit%
 	\usebibmacro{eprint}.%\usebibmacro{eprint-info}.%
 }%
+\DeclareBibliographyAlias{misc}{online}%
 %
 \DeclareBibliographyDriver{*}{%
 	\textbf{Unsupported entry type \texttt{\printfield{entrytype}} for item \texttt{\printfield{entrykey}}}%

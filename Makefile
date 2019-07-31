@@ -1,25 +1,34 @@
 #uncomment your preferred engine - either work
 #builder=pdflatex 
-builder=xelatex 
+builder=xelatex --nonstopmode
 
 #add your preferred pdf reader
 viewer=open
 
-default: view
+default: harvard-demo-tabular.view
 
-clean:
-	rm harvard-demo.bcf harvard-demo.blg harvard-demo.log harvard-demo.aux harvard-demo.run.xml harvard-demo.toc harvard-demo.out harvard-demo.bbl
+clean: harvard-demo-tabular.clean harvard-demo.clean
 
-all: harvard-demo.pdf
+%.clean:
+	-rm $*.bcf $*.blg $*.log $*.aux $*.run.xml $*.toc $*.out $*.bbl
 
-harvard-demo.pdf: harvard-demo.bbl harvard-demo.tex
-	$(builder) harvard-demo.tex
+distclean: clean
+	-rm harvard-demo.pdf
+	-rm harvard-demo-tabular.pdf
 
-harvard-demo.bbl: harvard-demo.bcf bibliography.bib
-	biber harvard-demo
+all: harvard-demo.pdf harvard-demo-tabular.pdf
 
-harvard-demo.bcf: harvard-demo.tex
-	$(builder) harvard-demo.tex
+%.pdf: %.bbl %.tex authoryear-unisa.cbx authoryear-unisa.bbx authoryear-unisa.lbx corp.dbx
+	$(builder) $*.tex
+	$(builder) $*.tex
 
-view: harvard-demo.pdf
-	$(viewer) harvard-demo.pdf
+%.bbl: %.bcf bibliography.bib authoryear-unisa.cbx authoryear-unisa.bbx authoryear-unisa.lbx corp.dbx
+	biber -T $*
+
+%.bcf: %.tex authoryear-unisa.cbx authoryear-unisa.bbx authoryear-unisa.lbx corp.dbx
+	$(builder) $<
+
+%.view: %.pdf
+	$(viewer) $<
+
+logs: harvard-demo-tabular.blg harvard-demo-tabular.bcf harvard-demo-tabular.bbl

@@ -1,11 +1,8 @@
 \documentclass[a4paper,australian,oneside,10pt,footlines=3]{scrbook}%pagenumber=bottomcenter,
 \usepackage{babel}
 % \usepackage[style=authoryear-unisa,citecounter,citetracker,datamodel=corp,terseinits=true,backend=biber]{biblatex}
-\usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
-% \usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker]{biblatex}
-% \usepackage[citestyle=authoryear-unisa,bibstyle=debug,citecounter,citetracker,datamodel=corp,terseinits=true]{biblatex}
-%\usepackage[citestyle=authoryear-unisa,bibstyle=authoryear,terseinits=true,giveninits=true]{biblatex
-% \usepackage[style=ieee]{biblatex}
+% \usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
+\usepackage[style=authoryear-unisa,bibstyle=debug,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
 \addbibresource{bibliography.bib}
 %\addbibresource{biblatex-examples.bib}
 %\renewrobustcmd*{\bibinitperiod}{Hello}
@@ -108,6 +105,7 @@
 
 
 \begin{document}
+\renewcommand{\fullcite}[1]{}
 %\publishers{University of South Australia\\
 %Division of Information Technology, Engineering and the Environment}
 % \subject{Generic}
@@ -152,7 +150,7 @@ The \biblatex{} BBX code is principally my own work, although it draws from the 
 % % % %
 
 
-\input{essay_example}
+% \input{essay_example}
 
 % % % %---------------------------------------------------------------------------
 
@@ -190,9 +188,9 @@ The \biblatex{} BBX code is principally my own work, although it draws from the 
 % \rowfont{\usekomafont{disposition}}
 \section{Print}
 % \input{tabular_sections/print_book}
-\input{tabular_sections/print_edited_book}
+% \input{tabular_sections/print_edited_book}
 % \input{tabular_sections/print_articles}
-% \input{tabular_sections/print_government}
+\input{tabular_sections/print_government}
 % \pagebreak[3]
 % \input{tabular_sections/print_legal}
 % \input{tabular_sections/print_patent_standard}
@@ -253,6 +251,7 @@ The \biblatex{} BBX code is principally my own work, although it draws from the 
 % % %\parencite{*}
 Lets test this again \parencite{HREOC1997}. We're trying to discuss \textcite{HREOC1997}, or even \textcite{HREOC1998}.
 We're also writing about \textcite{UniSA-HRG}, and again as the HRG \parencite{UniSAHorizon2020}
-\textcite{Plato1967}
+\textcite{ABS2010}
+% \textcite{Plato1967}
 \printbibliography[heading=bibintoc,nottype=artwork]
 \end{document}
