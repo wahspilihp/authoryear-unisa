@@ -259,13 +259,13 @@
 \DeclareFieldFormat{urldate}{viewed \printfield{urlday} \printfield[month]{urlmonth} \printfield{urlyear}}%
 %
 \DeclareFieldFormat{plain}{#1}%
-\DeclareFieldFormat[book]{title}{\emph{#1}}%
-\DeclareFieldFormat{booktitle}{\emph{#1}}%
-\DeclareFieldFormat{eventtitle}{\emph{#1}}%
-\DeclareFieldFormat{journaltitle}{\emph{#1}}%
+\DeclareFieldFormat[book]{title}{\textit{#1}}%
+\DeclareFieldFormat{booktitle}{\textit{#1}}%
+\DeclareFieldFormat{eventtitle}{\textit{#1}}%
+\DeclareFieldFormat{journaltitle}{\textit{#1}}%
 \DeclareFieldFormat[article]{series}{Series~#1}
 \ExplSyntaxOn
-\DeclareFieldFormat{subtitle}{\emph{\text_lowercase:n{#1}}}
+\DeclareFieldFormat{subtitle}{\texit{\text_lowercase:n{#1}}}
 \ExplSyntaxOff
 \DeclareFieldFormat[article,inbook,incollection,inprocedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}%
 \DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}%
@@ -282,6 +282,9 @@
 		\typeout{\thefield{entrykey} #1 is not integer}%
 		not integer vol #1%
 	}%
+}%
+\DeclareFieldFormat{mvvol}{%
+	\textit{volume #1}%
 }%
 % \DeclareNameFormat{last-init}{\usebibmacro{family-init}{\namepartfamily}%
 %         {\namepartgiveni}%
@@ -424,13 +427,16 @@
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
 	\iffieldundef{maintitle}{%
-		\printfield{title}%
+		\printfield{title}\newunit%
+		\printfield{volume}%
 	}{%
-		\printfield[title]{maintitle}\setunit*{\addcolon\space}%
-		\printfield[subtitle]{title}%
+		\textit{%
+			\printfield[title]{maintitle}\setunit{,\addspace}%
+			\printfield[mvvol]{volume}\setunit*{\addcolon\space}%
+			\printfield[subtitle]{title}%
+		}%
 	}%
 	\newunit%
-	\printfield{volume}\newunit%
 	\printfield{edition}\newunit%
 	\printnames{translator}\newunit%
 	\usebibmacro{publication}\newunit%
