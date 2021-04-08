@@ -2,9 +2,9 @@
 [\abx@cbxid]%
 %
 \def\cbx@classictextcite\relax
-% \ExecuteBibliographyOptions{labeldateparts,uniquename=init/full,uniquelist,autocite=inline,useprefix=true,defernumbers=true}%
-\ExecuteBibliographyOptions{labeldateparts,uniquename=corp,uniquelist,autocite=inline,useprefix=true,defernumbers=true}%
-\ExecuteBibliographyOptions{citecounter,citetracker,maxcitenames=3}%
+% \ExecuteBibliographyOptions{labeldateparts,uniquename=init/full,uniquelist=false,autocite=inline,useprefix=true,defernumbers=true}%
+\ExecuteBibliographyOptions{labeldateparts,uniquename=corp,uniquelist=false,autocite=inline,useprefix=true,defernumbers=true}%
+\ExecuteBibliographyOptions{citecounter,citetracker,maxcitenames=3,uniquelist=false}%
 \renewcommand*{\iffinalcitedelim}{\iflastcitekey}%
 %
 %
@@ -490,7 +490,7 @@
 \seq_new:N \g_capitalize_exceptions_seq
 \ExplSyntaxOff
 
-\DoNotCapitalise{a,is,of,the}
+\DoNotCapitalise{a,is,of,the,on}
 
 \DeclareFieldFormat*{citetitle}{%
   \iffieldundef{maintitle}{%
@@ -520,6 +520,13 @@
   }%
 }
 
-
+\AtEveryCitekey{%
+  \ifcsstring{blx@delimcontext}{citetitle}%
+    {}%
+    {%
+      \ifcsstring{blx@delimcontext}{citeauthor}%
+      {}%
+      {\addtocategory{inbib}{\thefield{entrykey}}}}%
+    }
 
 \endinput%
