@@ -265,7 +265,7 @@
 \DeclareFieldFormat{journaltitle}{\textit{#1}}%
 \DeclareFieldFormat[article]{series}{Series~#1}
 \ExplSyntaxOn
-\DeclareFieldFormat{subtitle}{\texit{\text_lowercase:n{#1}}}
+\DeclareFieldFormat{subtitle}{\textit{\text_lowercase:n{#1}}}
 \ExplSyntaxOff
 \DeclareFieldFormat[article,inbook,incollection,inprocedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}%
 \DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}%
