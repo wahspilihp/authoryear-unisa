@@ -12,7 +12,9 @@
 % \relax%
 % \fi%
 %
+\DeclareBibliographyCategory{inbib}
 \RequirePackage[english=british,thresholdtype=words,threshold=30]{csquotes}
+\RequirePackage{expl3}
 \DeclareQuoteStyle{unisa}
 	{\textquoteleft}{\textquoteright}
 	{\textquotedblleft}{\textquotedblright}
@@ -228,16 +230,29 @@
 %
 \newbibmacro{editor-or-dash}[1][last-init]{\iffieldequals{editornamehash}{\lastseenauthor}{\bysame}{\printnames[#1]{editor}}\savefield{editornamehash}{\lastseenauthor}}%
 %
+% \newbibmacro{author-or-editor-or-dash}[1][]{%
+% 	\ifnameundef{author}{%
+% 		\ifnameundef{editor}{%
+% 			#1%
+% 		}{%
+% 			\usebibmacro{editor-or-dash}\addspace %
+% 			\usebibmacro{ed-eds}%
+% 		}%
+% 	}{%
+% 		\usebibmacro{author-or-dash}%
+% 	}\addspace%
+% }%
+% %
 \newbibmacro{author-or-editor-or-dash}[1][]{%
-	\ifnameundef{author}{%
-		\ifnameundef{editor}{%
+	\ifnameundef{editor}{%
+		\ifnameundef{author}{%
 			#1%
 		}{%
-			\usebibmacro{editor-or-dash}\addspace %
-			\usebibmacro{ed-eds}%
+			\usebibmacro{author-or-dash}%
 		}%
 	}{%
-		\usebibmacro{author-or-dash}%
+		\usebibmacro{editor-or-dash}\addspace %
+		\usebibmacro{ed-eds}%
 	}\addspace%
 }%
 %
@@ -249,10 +264,14 @@
 \DeclareFieldFormat{eventtitle}{\emph{#1}}%
 \DeclareFieldFormat{journaltitle}{\emph{#1}}%
 \DeclareFieldFormat[article]{series}{Series~#1}
+\ExplSyntaxOn
+\DeclareFieldFormat{subtitle}{\emph{\text_lowercase:n{#1}}}
+\ExplSyntaxOff
 \DeclareFieldFormat[article,inbook,incollection,inprocedings,inreference,patent,thesis,unpublished]{title}{\enquote{#1}}%
 \DeclareFieldFormat{url}{{\UrlFont\textless\url{#1}\textgreater}}%
 \DeclareFieldFormat{innertitle}{\enquote{#1}}%
 \DeclareFieldFormat{volume}{\typeout{general volume \thefield{entrykey} \thefield{title} \showlineno}\ifinteger{#1}{\typeout{#1 is integer}vol. #1}{\typeout{#1 is not integer}not integer volume #1}}%
+\DeclareFieldFormat{volumes}{\typeout{general volume \thefield{entrykey} \thefield{title} \showlineno}\ifinteger{#1}{\typeout{#1 is integer}#1 vols.}{\typeout{#1 is not integer}not integer volumes #1}}%
 %
 \DeclareFieldFormat[article]{volume}{%
 	\typeout{avol \thefield{entrykey} \thefield{title} \showlineno}%
@@ -404,14 +423,33 @@
 \DeclareBibliographyDriver{book}{%
 	\usebibmacro{author-or-editor-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
-	\printfield{title}\newunit%
+	\iffieldundef{maintitle}{%
+		\printfield{title}%
+	}{%
+		\printfield[title]{maintitle}\setunit*{\addcolon\space}%
+		\printfield[subtitle]{title}%
+	}%
+	\newunit%
 	\printfield{volume}\newunit%
 	\printfield{edition}\newunit%
 	\printnames{translator}\newunit%
 	\usebibmacro{publication}\newunit%
 	% \ifnameundef{translator}{}{\printdate{pubdate}}\newunit%
 	\iffieldundef{url}{}{\usebibmacro{url-date}}\newunit%
-	\usebibmacro{eprint}.%\usebibmacro{eprint-info}.%
+	\usebibmacro{eprint}\finentry%\usebibmacro{eprint-info}.%
+}%
+\DeclareBibliographyDriver{mvbook}{%
+	\usebibmacro{author-or-editor-or-dash}\addspace%
+	\usebibmacro{year-letter}\newunit%
+	% \printfield{maintitle}\setunit*{:}
+	\printfield{title}\newunit%
+	\printfield{volumes}\newunit%
+	\printfield{edition}\newunit%
+	\printnames{translator}\newunit%
+	\usebibmacro{publication}\newunit%
+	% \ifnameundef{translator}{}{\printdate{pubdate}}\newunit%
+	\iffieldundef{url}{}{\usebibmacro{url-date}}\newunit%
+	\usebibmacro{eprint}\finentry%\usebibmacro{eprint-info}.%
 }%
 %
 \DeclareBibliographyAlias{collection}{book}%
@@ -529,7 +567,7 @@
 	\usebibmacro{author-or-dash}\addspace%
 	\usebibmacro{year-letter}\newunit%
 	\printfield{title}\newunit%
-	\printfield{type}\newunit%
+	\printfield{type} thesis\newunit%
 	\printlist{institution}\newunit%
 	%\iflistundef{location}{}{, \printlist{location}}.%
 	\printlist{location}\newunit%
@@ -651,7 +689,8 @@
 	\textbf{Unsupported entry type \texttt{\printfield{entrytype}} for item \texttt{\printfield{entrykey}}}%
 }%
 %
-% \renewcommand{\bibname}{References}%
+\def\bibname{References}%
+% \show\bibname
 % \defbibheading{bibliography}[\bibname]{%
 %   \chapter*{#1}%
 %   \addcontentsline{toc}{chapter}{References}%
