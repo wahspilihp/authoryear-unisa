@@ -378,6 +378,9 @@
      \usebibmacro{cite:labeldate+extradate}}%
     {\usebibmacro{cite:shorthand}}}
 
+
+% \show\cbx@classictextcite
+
 \renewbibmacro*{textcite}{%
   \ifnameundef{labelname}
     {\iffieldundef{shorthand}{%
@@ -421,7 +424,8 @@
         }{%
           %\BibliographyWarning{has author}
         }%
-        \printfield{labelyear}%
+        % \printfield{labelyear}\printfield{extrayear}%
+        \usebibmacro{cite:labeldate+extradate}%
      % }%
      }%
      }
