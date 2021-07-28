@@ -59,7 +59,9 @@
 	sorting=nyt,%
 	giveninits=true,%
 	% nottype=artwork,%
+	% block=ragged,%
 }%
+
 \usepackage{xstring}%
 %\usepackage{textcase}%
 \usepackage[level]{fmtcount}%
@@ -76,6 +78,11 @@
 	\providecommand{\lastseenauthor}{dummy initial value}%
 	\urlstyle{same} % set URLS to use body font, as per examples, while keeping the rest of the \url features. Note that the <> around URLs will always be set to match the URL font %
 }%
+
+% Allow more line breaking in URLs
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{1000}
 %
 %\RequirePackage{csquotes}%
 %
