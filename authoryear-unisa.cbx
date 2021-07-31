@@ -8,6 +8,7 @@
 \renewcommand*{\iffinalcitedelim}{\iflastcitekey}%
 %
 %
+\DeclareBibliographyCategory{inbib}
 \RequireCitationStyle{authoryear}%
 % \DefineBibliographyStrings{australian}{%
 %   inherit   = {australian},%
@@ -367,15 +368,30 @@
 % \xpretocmd{\fullcite}{\begingroup\ExecuteBibliographyOptions{maxcitenames=}}%
 %
 
+% \renewbibmacro*{cite:label}{%
+  % \iffieldundef{label}
+  %   {\ifentrytype{article}
+  %     {\printtext[bibhyperref]{\printfield{journal}}}
+  %     {\iflistundef{publisher}
+  %       {\printtext[bibhyperref]{\printfield[citetitle]{title}}}
+  %       {\printtext[bibhyperref]{\printlist{publisher}}}}}
+  %   {\printtext[bibhyperref]{\printfield{label}}}}
+
+\renewbibmacro*{cite:label}{\printtext[bibhyperref]{\printfield{label}}}
+
 \renewbibmacro*{cite}{%
   \iffieldundef{shorthand}%
-    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}%
-       {\usebibmacro{cite:label}%
-        \setunit{\printdelim{nonameyeardelim}}}%
-       {\ifnameundef{author}{\usebibmacro{editorstrg} }{}%
-        \printnames{labelname}%
-        \setunit{\printdelim{nameyeardelim}}}%
-     \usebibmacro{cite:labeldate+extradate}}%
+    {\ifnameundef{labelname}%
+      {\iffieldundef{label}%
+        {\ifentrytype{article}%
+          {\printtext[bibhyperref]{\printfield{journal}}}%
+          {\iflistundef{publisher}%
+            {\printtext[bibhyperref]{\printfield[citetitle]{title}}}%
+            {\printtext[bibhyperref]{\printlist{publisher}}}}}%
+        {\printtext[bibhyperref]{\printfield{label}}}}%
+      {\printnames{labelname}}%
+    \setunit{\printdelim{nameyeardelim}}%
+    \usebibmacro{cite:labeldate+extradate}}%
     {\usebibmacro{cite:shorthand}}}
 
 
@@ -385,28 +401,53 @@
   \ifnameundef{labelname}
     {\iffieldundef{shorthand}{%
       % \show\cbx@classictextcite%
-      \ifdefvoid{\cbx@classictextcite}{%
-       \usebibmacro{cite:label}%
-        \setunit{%
-          \global\booltrue{cbx:parens}%
-          \printdelim{nonameyeardelim}\bibopenparen}%
-        \ifnumequal{\value{citecount}}{1}
-          {\usebibmacro{prenote}}
-          {}%
-        % \bibstring{editor}
-        \ifnameundef{author}{%
-          \typeout{no author}
-          % \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
-          \iffieldundef{editortype}{%
-            \bibstring{editor}
-          }{%
-            \printfield{editortype}%
+      % \ifdefvoid{\cbx@classictextcite}{%
+       % \usebibmacro{cite:label}%
+       %  \setunit{%
+       %    \global\booltrue{cbx:parens}%
+       %    \printdelim{nonameyeardelim}\bibopenparen}%
+       %  \ifnumequal{\value{citecount}}{1}
+       %    {\usebibmacro{prenote}}
+       %    {}%
+       %  % \bibstring{editor}
+       %  \ifnameundef{author}{%
+       %    \typeout{no author}
+       %    % \BibliographyWarning{no author for \thefield{entrykey}, using editortype \thefield{editortype}}
+       %    \iffieldundef{editortype}{%
+       %      \bibstring{editor}
+       %    }{%
+       %      \printfield{editortype}%
+       %    }%
+       %  }%
+       %  % hello
+       %  % \BibliographyWarning{printing year}
+       {\ifentrytype{article}%
+        {%
+          \printtext[bibhyperref]{%
+            \iffieldundef{journaltitle}%
+              {\printfield{maintitle}}%
+              {\printfield{journaltitle}}%
+          } \global\booltrue{cbx:parens}%
+       \printdelim{nameyeardelim}\bibopenparen{\usebibmacro{cite:labeldate+extradate}}}%
+        {\ifentrytype{video}%
+          {%
+            \printtext[bibhyperref]{\printfield[citetitle]{title}} %
+            \global\booltrue{cbx:parens}%
+          \printdelim{nameyeardelim}\bibopenparen%
+          {%
+              \printtext[bibhyperref]{\printlist{publisher}}%
+              {\printdelim{nameyeardelim}}%
+              \usebibmacro{cite:labeldate+extradate}%
+            }%
           }%
+          {%
+            \printtext[bibhyperref]{\printlist{publisher}}\setunit{\printdelim{nameyeardelim}}
+            \usebibmacro{cite:labeldate+extradate}%
+          }%
+         }%
         }%
-        % hello
-        % \BibliographyWarning{printing year}
-        \usebibmacro{cite:labeldate+extradate}} %
-        {\cbx@classictextcite}}%
+      }%
+            %{\cbx@classictextcite}}%
       {\usebibmacro{cite:shorthand}}} %
     {\printnames{labelname}%
      \setunit{%
