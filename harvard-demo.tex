@@ -45,6 +45,7 @@
 \ofoot*{Philip Shaw}
 
 
+
 \usepackage{amsthm}
 \theoremstyle{remark}
 \newtheorem*{note}{Note}
@@ -154,7 +155,7 @@ This is emphasised by \textcite{Seahcirca2005} when\textelp{}
 
 \paragraph{Translated Classic}
 \todo{this doesn't work, includes translation year as book year}
-\citeauthor{Plato1967} expressed this \parencite[56-60]{Plato1967} 
+% \citeauthor{Plato1967} expressed this \parencite[56-60]{Plato1967} 
 \section{Edited Book}
 \todo{neither textcite nor parencite produce the ed. note}
 \todo{Support compiler instead of editor teg}
@@ -211,8 +212,9 @@ In their collection of essays, \textcite{Barnett2006} explore\textelp{}\\
 \textcite{Wolff2012}\textelp{}
 
 \paragraph{Magazine article with no author}
-\textcite[86]{LIBOR2012} highlights\textelp{}
+\textcite[86]{LIBOR2012} highlights yadda yadda \parencite[86]{LIBOR2012}
 \todo{citation commands for article with no author}
+\nocite{LIBOR2012}
 \printbibliography[heading=subbibliography]
 \end{refsection}
 
@@ -222,9 +224,10 @@ In their collection of essays, \textcite{Barnett2006} explore\textelp{}\\
 \textcite{Westwood2014} states\textelp{}\\
 \textelp{}in contemporary literature \parencite{Westwood2014}.
 
-\paragraph{Newspaper article with no author}
+\paragraph{Newspaper article with no author}{}
 The \textcite{AFR2012} examines\textelp{}\\
 \textelp{}big change \parencite{AFR2012}.
+\nocite{AFR2012}
 \printbibliography[heading=subbibliography]
 \end{refsection}
 
@@ -269,8 +272,8 @@ Bringing them home: report of the national inquiry into the separation of Aborig
 \begin{refsection}
 \section{Dictionary, encyclopaedia or handbook (reference works)}
 \paragraph{Dictionary or encyclopaedia without author(s) or editor(s)}
-\textcite[233]{HutchinsonEncylopaedia} defines\textelp{}\\
-According to the \textcite[152]{LongmanDict}\textelp{}
+% \textcite[152]{LongmanDict} defines\textelp{}\\
+% According to the \textcite[152]{LongmanDict}\textelp{}
 
 \paragraph{Dictionary or encyclopaedia with author(s) or editor(s)}
 \textcite[66]{Blackburn2005} describes\textelp{}\\
@@ -365,7 +368,7 @@ The \textcite{DIC2012} takes\textelp{}\\
 \begin{refsection}
 \section{Online dictionary, encyclopaedia or handbook (reference works)}
 \paragraph{Standard dictionary online}
-\textcite{EOLD2016} defines this as \textelp{}
+% \textcite{EOLD2016} defines this as \textelp{}
 
 \paragraph{Specialist encyclopaedia online}
 According to \textcite{Smith2011} phenomenology is \textelp{}
@@ -468,8 +471,8 @@ In response to Eastwood’s jabs, \textcite{Tweet} tweeted\textelp{}\todo{not wo
 \paragraph{Film on DVD, Blu-Ray, videotape, iTunes etc.}
 \textcite{Hugo} presents Méliès' as\textelp{}
 
-\paragraph{Television program}
-An episode of \textcite{Dateline} examines\textelp{}
+\paragraph{Television program}	
+An episode of \textcite{Dateline} examines something \parencite{Dateline}
 
 \paragraph{Episode of a television program/series}
 \nocite{Coulter2010}

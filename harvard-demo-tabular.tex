@@ -2,7 +2,7 @@
 \usepackage{babel}
 % \usepackage[style=authoryear-unisa,citecounter,citetracker,datamodel=corp,terseinits=true,backend=biber]{biblatex}
 % \usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
-\usepackage[style=authoryear-unisa,bibstyle=debug,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
+\usepackage[style=authoryear-unisa,terseinits=true,backend=biber,citecounter,citetracker,datamodel=corp,maxcitenames=3,maxbibnames=99]{biblatex}
 \addbibresource{bibliography.bib}
 %\addbibresource{biblatex-examples.bib}
 %\renewrobustcmd*{\bibinitperiod}{Hello}
@@ -76,7 +76,7 @@
 
 %DEMONSTRATION COMMANDS - NOT FOR USE IN UniSA REPORTS
 \makeatletter
-\DeclareCiteCommand{\fullcite}
+\DeclareCiteCommand{\fullcite}%
   {\defcounter{maxnames}{\blx@maxbibnames}%
     \usebibmacro{prenote}}%
   {\usedriver%
@@ -93,11 +93,11 @@
 \let\abx@macro@bibindex\@empty
 \let\abx@macro@pageref\@empty}
 % \show\fullcite
-% \show\blxcitecmd
-% \show\blx@citei@fullcite
-% \show\blxciteicmd
+\show\blxcitecmd
+\show\blx@citei@fullcite
+\show\blxciteicmd
 
-% \show\blx@printbibliography
+\show\blx@printbibliography
 
 \makeatother
 
@@ -105,7 +105,7 @@
 
 
 \begin{document}
-\renewcommand{\fullcite}[1]{}
+% \renewcommand{\fullcite}[1]{}
 %\publishers{University of South Australia\\
 %Division of Information Technology, Engineering and the Environment}
 % \subject{Generic}
@@ -187,9 +187,9 @@ The \biblatex{} BBX code is principally my own work, although it draws from the 
 \newcommand{\badrow}[1]{\rowfont\bfseries\href{https://github.com/wahspilihp/authoryear-unisa/issues/#1}{}}
 % \rowfont{\usekomafont{disposition}}
 \section{Print}
-% \input{tabular_sections/print_book}
-% \input{tabular_sections/print_edited_book}
-% \input{tabular_sections/print_articles}
+\input{tabular_sections/print_book}
+\input{tabular_sections/print_edited_book}
+\input{tabular_sections/print_articles}
 \input{tabular_sections/print_government}
 % \pagebreak[3]
 % \input{tabular_sections/print_legal}
